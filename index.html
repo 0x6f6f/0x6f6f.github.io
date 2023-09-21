@@ -170,7 +170,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2023-09-21 18:16:42 / Modified: 18:34:04" itemprop="dateCreated datePublished" datetime="2023-09-21T18:16:42+08:00">2023-09-21</time>
+              <time title="Created: 2023-09-21 18:16:42 / Modified: 18:40:28" itemprop="dateCreated datePublished" datetime="2023-09-21T18:16:42+08:00">2023-09-21</time>
             </span>
 
           
@@ -215,7 +215,7 @@ href="mailto:zrway@172.20.52.40">zrway@172.20.52.40</a> "mkdir -p ~/.ssh
 <li><p>在ssh链接配置文件里面，IdentityFile字段里面加入认证文件路径。对应的文件应该是你的私钥：</p>
 <p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Host 【IP】</span><br><span class="line">HostName 【IP】</span><br><span class="line">User 【系统用户名】</span><br><span class="line">IdentityFile	【ssh私钥路径】</span><br></pre></td></tr></table></figure></p></li>
 </ol>
-<h2 id="screen用法">3. Screen用法</h2>
+<h2 id="screen用法">2. Screen用法</h2>
 <ol type="1">
 <li>启动和终止会话：</li>
 </ol>
@@ -252,6 +252,16 @@ href="mailto:zrway@172.20.52.40">zrway@172.20.52.40</a> "mkdir -p ~/.ssh
 <li>粘贴复制的文本：按下组合键 <code>Ctrl + A</code>，然后按下 <code>]</code></li>
 </ul></li>
 </ol>
+<h2 id="screen骚操作">3. Screen骚操作</h2>
+<p>可以用screen在服务器上面挂一些需要很长运行时间或者经常会用到的进程：</p>
+<h3 id="gpucpu监视器">1. GPU/CPU监视器：</h3>
+<p>执行以下指令： <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">screen -S GPU</span><br><span class="line">watch -n 1 nvidia-smi</span><br></pre></td></tr></table></figure>
+然后ctrl+d退出来，后面要看gpu实时占用情况的话直接screen -d
+GPU就可以了</p>
+<p>CPU监视器同理，只不过是把指令换成top就行。不用加watch，因为top本身就是实时更新的。</p>
+<h3 id="挂实验">2. 挂实验</h3>
+<p>很简单，激活环境然后丢里面跑就行了。即使断开了ssh链接也可以继续跑，别人还看不到。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">screen -S exp</span><br><span class="line">conda activate 【你的环境】</span><br><span class="line">python script.py</span><br></pre></td></tr></table></figure>
 
       
     </div>
