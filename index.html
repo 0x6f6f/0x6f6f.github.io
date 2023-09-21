@@ -170,7 +170,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2023-09-21 18:16:42 / Modified: 18:24:58" itemprop="dateCreated datePublished" datetime="2023-09-21T18:16:42+08:00">2023-09-21</time>
+              <time title="Created: 2023-09-21 18:16:42 / Modified: 18:34:04" itemprop="dateCreated datePublished" datetime="2023-09-21T18:16:42+08:00">2023-09-21</time>
             </span>
 
           
@@ -184,43 +184,39 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <ul>
-<li><p>用命令行终端登录校园网：</p>
-  <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -X POST -d <span class="string">&quot;DDDDD=【学号】&amp;upass=【密码】&amp;0MKKey=&quot;</span> 【校园网登录页】</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>服务器vpn网络环境配置</p>
-<p>  clash GUI安装教程：<a target="_blank" rel="noopener" href="https://medium.com/@van-der-Poel/clash%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8Bwin10-linux-3c0912003bd3">Clash安装教程Win10,Linux. Windows版 | by van-der-Poel | Medium</a></p>
-<p>  clash 命令行使用方法：<a target="_blank" rel="noopener" href="https://glados.one/console/terminal">GLaDOS</a></p>
-<p>  安装好后，cd clash然后执行以下指令启动screen，在机器上运行一个命令行代理程序：</p>
-  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">screen -S vpn</span><br><span class="line">cd ~/clash</span><br><span class="line">./clash-linux-amd64-v1.10.0 -f glados.yaml -d .</span><br></pre></td></tr></table></figure>
-
-<p>  然后设置终端走的代理：</p>
-  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi ~/.bashrc</span><br></pre></td></tr></table></figure>
-
-<p>  添加以下两行：</p>
-  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export http_proxy=&#x27;http://localhost:[你设置的http代理端口]&#x27;</span><br><span class="line">export https_proxy=&#x27;http://localhost:[你设置的http代理端口]&#x27;</span><br></pre></td></tr></table></figure>
-<p>  这个端口有可能被占用，如果被占了就换一个，配置文件在~/clash/glados.yaml</p>
-<p>  测试:</p>
-  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget www.google.com</span><br></pre></td></tr></table></figure>
-<p>  如果正常则可以使用。</p>
-</li>
-<li><p>ssh免密链接服务器</p>
-<ol>
+          <h1 id="服务器网络相关">服务器网络相关</h1>
+<h2 id="用命令行终端登录校园网">1. 用命令行终端登录校园网：</h2>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -X POST -d <span class="string">&quot;DDDDD=【学号】&amp;upass=【密码】&amp;0MKKey=&quot;</span> 【校园网登录页】</span><br></pre></td></tr></table></figure>
+<h2 id="服务器vpn网络环境配置">2. 服务器vpn网络环境配置</h2>
+<p>clash GUI安装教程：<a
+target="_blank" rel="noopener" href="https://medium.com/@van-der-Poel/clash%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8Bwin10-linux-3c0912003bd3">Clash安装教程Win10,Linux.
+Windows版 | by van-der-Poel | Medium</a></p>
+<p>clash 命令行使用方法：<a
+target="_blank" rel="noopener" href="https://glados.one/console/terminal">GLaDOS</a></p>
+<p>安装好后，cd
+clash然后执行以下指令启动screen，在机器上运行一个命令行代理程序：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">screen -S vpn</span><br><span class="line">cd ~/clash</span><br><span class="line">./clash-linux-amd64-v1.10.0 -f glados.yaml -d .</span><br></pre></td></tr></table></figure>
+<p>然后设置终端走的代理：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi ~/.bashrc</span><br></pre></td></tr></table></figure>
+<p>添加以下两行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export http_proxy=&#x27;http://localhost:[你设置的http代理端口]&#x27;</span><br><span class="line">export https_proxy=&#x27;http://localhost:[你设置的http代理端口]&#x27;</span><br></pre></td></tr></table></figure>
+<p>这个端口有可能被占用，如果被占了就换一个，配置文件在~/clash/glados.yaml</p>
+<p>测试: <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget www.google.com</span><br></pre></td></tr></table></figure> 如果正常则可以使用。</p>
+<h1 id="服务器使用相关">服务器使用相关</h1>
+<h2 id="ssh免密链接服务器">1. ssh免密链接服务器</h2>
+<ol type="1">
 <li><p>生成私钥-公钥对：</p>
-<p> <code>ssh-keygen -t rsa</code></p>
-</li>
-<li><p>在win10系统下，以管理员权限启动powershell</p>
-</li>
-<li><p>cat ~/.ssh/id_rsa.pub | ssh <a href="mailto:zrway@172.20.52.40">zrway@172.20.52.40</a> “mkdir -p ~/.ssh &amp;&amp; cat &gt;&gt; ~/.ssh/authorized_keys”</p>
-<p> 其中的ssh字段应该是系统用户名@远程主机ip；id_rsa.pub是本地生成的公钥。保证这两个字段和配置一致。</p>
-</li>
+<p><code>ssh-keygen -t rsa</code></p></li>
+<li><p>在win10系统下，以管理员权限启动powershell</p></li>
+<li><p>cat ~/.ssh/id_rsa.pub | ssh <a
+href="mailto:zrway@172.20.52.40">zrway@172.20.52.40</a> "mkdir -p ~/.ssh
+&amp;&amp; cat &gt;&gt; ~/.ssh/authorized_keys"</p>
+<p>其中的ssh字段应该是系统用户名@远程主机ip；id_rsa.pub是本地生成的公钥。保证这两个字段和配置一致。</p></li>
 <li><p>在ssh链接配置文件里面，IdentityFile字段里面加入认证文件路径。对应的文件应该是你的私钥：</p>
- <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Host 【IP】</span><br><span class="line">HostName 【IP】</span><br><span class="line">User 【系统用户名】</span><br><span class="line">IdentityFile	【ssh私钥路径】</span><br></pre></td></tr></table></figure>
-</li>
+<p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Host 【IP】</span><br><span class="line">HostName 【IP】</span><br><span class="line">User 【系统用户名】</span><br><span class="line">IdentityFile	【ssh私钥路径】</span><br></pre></td></tr></table></figure></p></li>
 </ol>
-</li>
-<li><p>Screen用法</p>
-<ol>
+<h2 id="screen用法">3. Screen用法</h2>
+<ol type="1">
 <li>启动和终止会话：</li>
 </ol>
 <ul>
@@ -228,34 +224,33 @@
 <li>启动具有指定名称的新会话：<code>screen -S session_name</code></li>
 <li>列出当前运行的会话：<code>screen -ls</code></li>
 <li>连接到具有指定名称的会话：<code>screen -r session_name</code></li>
-<li>分离当前会话（保持会话在后台运行）：按下组合键 <code>Ctrl + A</code>，然后按下 <code>d</code></li>
-<li>终止当前会话：按下组合键 <code>Ctrl + A</code>，然后按下 <code>k</code>；或者是执行 <code>screen -X -S session_id quit</code> 命令</li>
+<li>分离当前会话（保持会话在后台运行）：按下组合键 <code>Ctrl + A</code>，然后按下 <code>d</code></li>
+<li>终止当前会话：按下组合键 <code>Ctrl + A</code>，然后按下 <code>k</code>；或者是执行
+<code>screen -X -S session_id quit</code> 命令</li>
 </ul>
-</li>
-</ul>
-<ol start="2">
-<li>窗口管理：<ul>
-<li>创建新窗口：按下组合键 <code>Ctrl + A</code>，然后按下 <code>c</code></li>
-<li>切换到下一个窗口：按下组合键 <code>Ctrl + A</code>，然后按下 <code>n</code></li>
-<li>切换到上一个窗口：按下组合键 <code>Ctrl + A</code>，然后按下 <code>p</code></li>
-<li>切换到具有指定编号的窗口：按下组合键 <code>Ctrl + A</code>，然后按下 <code>0</code> 到 <code>9</code></li>
-<li>列出所有窗口：按下组合键 <code>Ctrl + A</code>，然后按下 <code>&quot;</code>（双引号）</li>
-<li>关闭当前窗口：按下组合键 <code>Ctrl + A</code>，然后按下 <code>k</code></li>
-</ul>
-</li>
-<li>滚动和复制：<ul>
-<li>进入滚动模式：按下组合键 <code>Ctrl + A</code>，然后按下 <code>[</code></li>
+<ol start="2" type="1">
+<li>窗口管理：
+<ul>
+<li>创建新窗口：按下组合键 <code>Ctrl + A</code>，然后按下 <code>c</code></li>
+<li>切换到下一个窗口：按下组合键 <code>Ctrl + A</code>，然后按下 <code>n</code></li>
+<li>切换到上一个窗口：按下组合键 <code>Ctrl + A</code>，然后按下 <code>p</code></li>
+<li>切换到具有指定编号的窗口：按下组合键 <code>Ctrl + A</code>，然后按下 <code>0</code> 到 <code>9</code></li>
+<li>列出所有窗口：按下组合键 <code>Ctrl + A</code>，然后按下 <code>"</code>（双引号）</li>
+<li>关闭当前窗口：按下组合键 <code>Ctrl + A</code>，然后按下 <code>k</code></li>
+</ul></li>
+<li>滚动和复制：
+<ul>
+<li>进入滚动模式：按下组合键 <code>Ctrl + A</code>，然后按下 <code>[</code></li>
 <li>使用箭头键或 Page Up/Page Down 键滚动屏幕</li>
-<li>退出滚动模式：按下组合键 <code>Ctrl + C</code> 或按下 <code>Esc</code></li>
-</ul>
-</li>
-<li>其他常用操作：<ul>
-<li>显示帮助：按下组合键 <code>Ctrl + A</code>，然后按下 <code>?</code></li>
-<li>更改当前会话名称：按下组合键 <code>Ctrl + A</code>，然后按下 <code>Shift + A</code></li>
-<li>在会话间复制文本：按下组合键 <code>Ctrl + A</code>，然后按下 <code>[</code> 进入滚动模式，选择文本并复制</li>
-<li>粘贴复制的文本：按下组合键 <code>Ctrl + A</code>，然后按下 <code>]</code></li>
-</ul>
-</li>
+<li>退出滚动模式：按下组合键 <code>Ctrl + C</code> 或按下 <code>Esc</code></li>
+</ul></li>
+<li>其他常用操作：
+<ul>
+<li>显示帮助：按下组合键 <code>Ctrl + A</code>，然后按下 <code>?</code></li>
+<li>更改当前会话名称：按下组合键 <code>Ctrl + A</code>，然后按下 <code>Shift + A</code></li>
+<li>在会话间复制文本：按下组合键 <code>Ctrl + A</code>，然后按下 <code>[</code> 进入滚动模式，选择文本并复制</li>
+<li>粘贴复制的文本：按下组合键 <code>Ctrl + A</code>，然后按下 <code>]</code></li>
+</ul></li>
 </ol>
 
       
@@ -301,7 +296,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2023-09-21 18:15:28 / Modified: 18:15:49" itemprop="dateCreated datePublished" datetime="2023-09-21T18:15:28+08:00">2023-09-21</time>
+              <time title="Created: 2023-09-21 18:15:28 / Modified: 18:32:31" itemprop="dateCreated datePublished" datetime="2023-09-21T18:15:28+08:00">2023-09-21</time>
             </span>
 
           
@@ -315,40 +310,42 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <ul>
-<li><p>hexo静态博客【很难快速解决公式问题，慢慢搞吧】</p>
-<p>  使用hexo+git pages搭建，搭建过程参考以下文章：</p>
-<p>  <a target="_blank" rel="noopener" href="https://www.zhihu.com/search?type=content&q=%E5%8D%9A%E5%AE%A2%20hexo">(13 封私信) 博客 hexo - 搜索结果 - 知乎 (zhihu.com)</a></p>
-<p>  <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/618864711">Hexo+Next主题搭建个人博客+优化全过程（完整详细版） - 知乎 (zhihu.com)</a></p>
+          <h1 id="hexo静态博客">1. hexo静态博客</h1>
+<pre><code>很难快速解决公式问题，慢慢搞吧  </code></pre>
+<p>使用hexo+git pages搭建，搭建过程参考以下文章：</p>
+<p><a
+target="_blank" rel="noopener" href="https://www.zhihu.com/search?type=content&amp;q=%E5%8D%9A%E5%AE%A2%20hexo">(13
+封私信) 博客 hexo - 搜索结果 - 知乎 (zhihu.com)</a></p>
+<p><a
+target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/618864711">Hexo+Next主题搭建个人博客+优化全过程（完整详细版）
+- 知乎 (zhihu.com)</a></p>
 <ul>
-<li><p>解决的问题清单：</p>
-<ol>
+<li>解决的问题清单：
+<ol type="1">
 <li><p>图片插入问题</p>
-<p> <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/265077468">hexo博客如何插入图片 - 知乎 (zhihu.com)</a></p>
-</li>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/265077468">hexo博客如何插入图片
+- 知乎 (zhihu.com)</a></p></li>
 <li><p>公式渲染问题：</p>
-<p> <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/381508379">Hexo显示latex公式 - 知乎 (zhihu.com)</a></p>
-<p> <a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45073562/article/details/120289648">「博客搭建」Hexo Next主题配置Mathjax遇到的问题：pandoc exited with code null_pandoc exited with code null._Jannish的博客-CSDN博客</a></p>
-<p> 记得要在本地下载配置pandoc</p>
-</li>
-</ol>
-</li>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/381508379">Hexo显示latex公式 -
+知乎 (zhihu.com)</a></p>
+<p><a
+target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45073562/article/details/120289648">「博客搭建」Hexo
+Next主题配置Mathjax遇到的问题：pandoc exited with code null_pandoc
+exited with code null._Jannish的博客-CSDN博客</a></p>
+<p>记得要在本地下载配置pandoc</p></li>
+</ol></li>
 </ul>
-</li>
-</ul>
-<pre><code>1. 域名
-2. 基本工作流
-
-    写文章：hexo </code></pre><ul>
-<li><p>notion动态博客【很简单，可以实时更新。可拓展性较差。】</p>
-<p>  <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/363367925">Notion免费搭建个人网站，使用Notion又多了一个理由 - 知乎 (zhihu.com)</a></p>
-<p>  这个还是蛮简单的，已经弄好了，地址在：</p>
-<p>  <a target="_blank" rel="noopener" href="https://vercel-blog-rosy.vercel.app/">blogs</a></p>
-</li>
-<li><p>其他方法【需要WSL】</p>
-<p>  <a target="_blank" rel="noopener" href="https://juejin.cn/post/7233976341753495611">使用Github Pages搭建个人博客 - 掘金 (juejin.cn)</a></p>
-</li>
-</ul>
+<h1 id="notion动态博客">2. notion动态博客</h1>
+<p>很简单，可以实时更新。可拓展性较差。</p>
+<p><a
+target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/363367925">Notion免费搭建个人网站，使用Notion又多了一个理由
+- 知乎 (zhihu.com)</a></p>
+<p>这个还是蛮简单的，已经弄好了，地址在：</p>
+<p><a target="_blank" rel="noopener" href="https://vercel-blog-rosy.vercel.app/">blogs</a></p>
+<h1 id="其他方法">3. 其他方法</h1>
+<p>需要WSL</p>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7233976341753495611">使用Github
+Pages搭建个人博客 - 掘金 (juejin.cn)</a></p>
 
       
     </div>
