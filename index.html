@@ -145,6 +145,229 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://0x6f6f.github.io/2023/09/21/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%B8%E5%85%B3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="28527">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="0x6f6f的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/09/21/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%B8%E5%85%B3/" class="post-title-link" itemprop="url">服务器相关</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-09-21 18:16:42 / Modified: 18:24:58" itemprop="dateCreated datePublished" datetime="2023-09-21T18:16:42+08:00">2023-09-21</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <ul>
+<li><p>用命令行终端登录校园网：</p>
+  <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -X POST -d <span class="string">&quot;DDDDD=【学号】&amp;upass=【密码】&amp;0MKKey=&quot;</span> 【校园网登录页】</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>服务器vpn网络环境配置</p>
+<p>  clash GUI安装教程：<a target="_blank" rel="noopener" href="https://medium.com/@van-der-Poel/clash%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8Bwin10-linux-3c0912003bd3">Clash安装教程Win10,Linux. Windows版 | by van-der-Poel | Medium</a></p>
+<p>  clash 命令行使用方法：<a target="_blank" rel="noopener" href="https://glados.one/console/terminal">GLaDOS</a></p>
+<p>  安装好后，cd clash然后执行以下指令启动screen，在机器上运行一个命令行代理程序：</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">screen -S vpn</span><br><span class="line">cd ~/clash</span><br><span class="line">./clash-linux-amd64-v1.10.0 -f glados.yaml -d .</span><br></pre></td></tr></table></figure>
+
+<p>  然后设置终端走的代理：</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi ~/.bashrc</span><br></pre></td></tr></table></figure>
+
+<p>  添加以下两行：</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export http_proxy=&#x27;http://localhost:[你设置的http代理端口]&#x27;</span><br><span class="line">export https_proxy=&#x27;http://localhost:[你设置的http代理端口]&#x27;</span><br></pre></td></tr></table></figure>
+<p>  这个端口有可能被占用，如果被占了就换一个，配置文件在~/clash/glados.yaml</p>
+<p>  测试:</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget www.google.com</span><br></pre></td></tr></table></figure>
+<p>  如果正常则可以使用。</p>
+</li>
+<li><p>ssh免密链接服务器</p>
+<ol>
+<li><p>生成私钥-公钥对：</p>
+<p> <code>ssh-keygen -t rsa</code></p>
+</li>
+<li><p>在win10系统下，以管理员权限启动powershell</p>
+</li>
+<li><p>cat ~/.ssh/id_rsa.pub | ssh <a href="mailto:zrway@172.20.52.40">zrway@172.20.52.40</a> “mkdir -p ~/.ssh &amp;&amp; cat &gt;&gt; ~/.ssh/authorized_keys”</p>
+<p> 其中的ssh字段应该是系统用户名@远程主机ip；id_rsa.pub是本地生成的公钥。保证这两个字段和配置一致。</p>
+</li>
+<li><p>在ssh链接配置文件里面，IdentityFile字段里面加入认证文件路径。对应的文件应该是你的私钥：</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Host 【IP】</span><br><span class="line">HostName 【IP】</span><br><span class="line">User 【系统用户名】</span><br><span class="line">IdentityFile	【ssh私钥路径】</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p>Screen用法</p>
+<ol>
+<li>启动和终止会话：</li>
+</ol>
+<ul>
+<li>启动新的会话：<code>screen</code></li>
+<li>启动具有指定名称的新会话：<code>screen -S session_name</code></li>
+<li>列出当前运行的会话：<code>screen -ls</code></li>
+<li>连接到具有指定名称的会话：<code>screen -r session_name</code></li>
+<li>分离当前会话（保持会话在后台运行）：按下组合键 <code>Ctrl + A</code>，然后按下 <code>d</code></li>
+<li>终止当前会话：按下组合键 <code>Ctrl + A</code>，然后按下 <code>k</code>；或者是执行 <code>screen -X -S session_id quit</code> 命令</li>
+</ul>
+</li>
+</ul>
+<ol start="2">
+<li>窗口管理：<ul>
+<li>创建新窗口：按下组合键 <code>Ctrl + A</code>，然后按下 <code>c</code></li>
+<li>切换到下一个窗口：按下组合键 <code>Ctrl + A</code>，然后按下 <code>n</code></li>
+<li>切换到上一个窗口：按下组合键 <code>Ctrl + A</code>，然后按下 <code>p</code></li>
+<li>切换到具有指定编号的窗口：按下组合键 <code>Ctrl + A</code>，然后按下 <code>0</code> 到 <code>9</code></li>
+<li>列出所有窗口：按下组合键 <code>Ctrl + A</code>，然后按下 <code>&quot;</code>（双引号）</li>
+<li>关闭当前窗口：按下组合键 <code>Ctrl + A</code>，然后按下 <code>k</code></li>
+</ul>
+</li>
+<li>滚动和复制：<ul>
+<li>进入滚动模式：按下组合键 <code>Ctrl + A</code>，然后按下 <code>[</code></li>
+<li>使用箭头键或 Page Up/Page Down 键滚动屏幕</li>
+<li>退出滚动模式：按下组合键 <code>Ctrl + C</code> 或按下 <code>Esc</code></li>
+</ul>
+</li>
+<li>其他常用操作：<ul>
+<li>显示帮助：按下组合键 <code>Ctrl + A</code>，然后按下 <code>?</code></li>
+<li>更改当前会话名称：按下组合键 <code>Ctrl + A</code>，然后按下 <code>Shift + A</code></li>
+<li>在会话间复制文本：按下组合键 <code>Ctrl + A</code>，然后按下 <code>[</code> 进入滚动模式，选择文本并复制</li>
+<li>粘贴复制的文本：按下组合键 <code>Ctrl + A</code>，然后按下 <code>]</code></li>
+</ul>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://0x6f6f.github.io/2023/09/21/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E5%92%8C%E5%86%85%E5%AE%B9%E5%8F%91%E5%B8%83%E8%A7%84%E5%88%92/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="28527">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="0x6f6f的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/09/21/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E5%92%8C%E5%86%85%E5%AE%B9%E5%8F%91%E5%B8%83%E8%A7%84%E5%88%92/" class="post-title-link" itemprop="url">博客搭建和内容发布规划</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-09-21 18:15:28 / Modified: 18:15:49" itemprop="dateCreated datePublished" datetime="2023-09-21T18:15:28+08:00">2023-09-21</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <ul>
+<li><p>hexo静态博客【很难快速解决公式问题，慢慢搞吧】</p>
+<p>  使用hexo+git pages搭建，搭建过程参考以下文章：</p>
+<p>  <a target="_blank" rel="noopener" href="https://www.zhihu.com/search?type=content&q=%E5%8D%9A%E5%AE%A2%20hexo">(13 封私信) 博客 hexo - 搜索结果 - 知乎 (zhihu.com)</a></p>
+<p>  <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/618864711">Hexo+Next主题搭建个人博客+优化全过程（完整详细版） - 知乎 (zhihu.com)</a></p>
+<ul>
+<li><p>解决的问题清单：</p>
+<ol>
+<li><p>图片插入问题</p>
+<p> <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/265077468">hexo博客如何插入图片 - 知乎 (zhihu.com)</a></p>
+</li>
+<li><p>公式渲染问题：</p>
+<p> <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/381508379">Hexo显示latex公式 - 知乎 (zhihu.com)</a></p>
+<p> <a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45073562/article/details/120289648">「博客搭建」Hexo Next主题配置Mathjax遇到的问题：pandoc exited with code null_pandoc exited with code null._Jannish的博客-CSDN博客</a></p>
+<p> 记得要在本地下载配置pandoc</p>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code>1. 域名
+2. 基本工作流
+
+    写文章：hexo </code></pre><ul>
+<li><p>notion动态博客【很简单，可以实时更新。可拓展性较差。】</p>
+<p>  <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/363367925">Notion免费搭建个人网站，使用Notion又多了一个理由 - 知乎 (zhihu.com)</a></p>
+<p>  这个还是蛮简单的，已经弄好了，地址在：</p>
+<p>  <a target="_blank" rel="noopener" href="https://vercel-blog-rosy.vercel.app/">blogs</a></p>
+</li>
+<li><p>其他方法【需要WSL】</p>
+<p>  <a target="_blank" rel="noopener" href="https://juejin.cn/post/7233976341753495611">使用Github Pages搭建个人博客 - 掘金 (juejin.cn)</a></p>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://0x6f6f.github.io/2023/09/21/ViT%E8%AE%B0%E5%BD%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -184,179 +407,63 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1
-id="nlp中seq2seq结构对self-attention机制的引入">NLP中seq2seq结构对self
-attention机制的引入</h1>
-<p>序列转序列结构常用于机器翻译，其分为编码器和解码器两部分。其中，编码器负责将输入文本转译为上下文编码向量，解码器负责对其进行解码，翻译为目标语言。</p>
-<figure>
-<img src="1.png" alt="Encoder-Decoder架构" />
-<figcaption aria-hidden="true">Encoder-Decoder架构</figcaption>
-</figure>
+          <h1 id="NLP中seq2seq结构对self-attention机制的引入"><a href="#NLP中seq2seq结构对self-attention机制的引入" class="headerlink" title="NLP中seq2seq结构对self attention机制的引入"></a>NLP中seq2seq结构对self attention机制的引入</h1><p>序列转序列结构常用于机器翻译，其分为编码器和解码器两部分。其中，编码器负责将输入文本转译为上下文编码向量，解码器负责对其进行解码，翻译为目标语言。</p>
+<p><img src="1.png" alt="Encoder-Decoder架构"></p>
 <p>该上下文编码向量长度一般是固定的，导致模型对于变长输入文本的处理能力不一致。为了提升模型对于该序列的利用能力，学界引入了注意力机制根据输入序列的不同部分为其赋予不同的注意力权重。</p>
 <p>对注意力机制进行抽象，可以归结为Q,K,V三个矩阵的计算，如下图所示：</p>
-<figure>
-<img src="2.png" alt="QKV机制下的注意力" />
-<figcaption aria-hidden="true">QKV机制下的注意力</figcaption>
-</figure>
+<p><img src="2.png" alt="QKV机制下的注意力"></p>
 <p>一个注意力层会在内部维护q,k,v三个权重矩阵，分别对应查询权重、键权重、值权重三方面权重。将输入序列向量与q,k,v矩阵分别相乘，就得到了Q（Query，查询向量，包含当前位置的输出序列信息，用于计算注意力权重）,K（Keys，键向量，包含序列中每个位置的信息，用于计算注意力权重）,V（Values，值向量，包含输入序列中每个位置的具体数值信息，用于根据注意力权重计算输出的上下文向量值）三个向量。</p>
-<p>可以使用下面的公式表示从输入向量 x、待学习的 qkv
-三个权重矩阵出发，得到注意力值的计算过程：</p>
+<p>可以使用下面的公式表示从输入向量 x、待学习的 qkv 三个权重矩阵出发，得到注意力值的计算过程：</p>
 <aside>
-<p>💡 1. 首先，对输入向量 x
-进行线性变换得到查询（q）、键（k）和值（v）的向量表示。其中，<span
-class="math inline">\(W_q\)</span>、 <span
-class="math inline">\(W_q\)</span>和 <span
-class="math inline">\(W_q\)</span>分别是待学习的查询、键和值的权重矩阵：</p>
-<p><span class="math display">\[
-q = W_q \cdot x \\
-k = W_k \cdot x \\
-v = W_v \cdot x \\
-\]</span></p>
-<ol type="1">
-<li>接下来，通过计算查询向量 q 和键向量 k
-之间的相似度来计算注意力权重，其中，<span
-class="math inline">\(d_k\)</span>是查询和键的向量维度：</li>
+💡 1. 首先，对输入向量 x 进行线性变换得到查询（q）、键（k）和值（v）的向量表示。其中，$W_q$、 $W_q$和  $W_q$分别是待学习的查询、键和值的权重矩阵：
+
+<p>$$<br>q = W_q \cdot x \<br>k = W_k \cdot x \<br>v = W_v \cdot x \<br>$$</p>
+<ol>
+<li>接下来，通过计算查询向量 q 和键向量 k 之间的相似度来计算注意力权重，其中，$d_k$是查询和键的向量维度：</li>
 </ol>
-<p><span class="math display">\[
-\text{Attention}(q, k) = \text{softmax}\left(\frac{q \cdot
-k^T}{\sqrt{d_k}}\right)
-\]</span></p>
-<ol type="1">
-<li>最后，根据注意力权重对值向量 v
-进行加权求和，得到注意力层输出的上下文向量：</li>
+<p>$$<br>\text{Attention}(q, k) = \text{softmax}\left(\frac{q \cdot k^T}{\sqrt{d_k}}\right)<br>$$</p>
+<ol>
+<li>最后，根据注意力权重对值向量 v 进行加权求和，得到注意力层输出的上下文向量：</li>
 </ol>
-<p><span class="math display">\[
-\text{Value} = \text{Attention}(q, k) \cdot v
-\]</span></p>
+<p>$$<br>\text{Value} = \text{Attention}(q, k) \cdot v<br>$$</p>
 </aside>
+
 <p>对上述操作的理解：</p>
 <ul>
 <li>qkv三个矩阵的计算可以理解为使用对应权重对输入向量的线性变换</li>
 <li></li>
 </ul>
-<h1 id="注意力机制的解释">注意力机制的解释</h1>
-<p>从上述例子中我们可以知道，注意力机制的引入目的是“有的放矢”地处理中间向量，提高模型效率。其实在自注意力机制概念提出之前，已经有其他意义比较相近的研究被提出：</p>
-<ol type="1">
+<h1 id="注意力机制的解释"><a href="#注意力机制的解释" class="headerlink" title="注意力机制的解释"></a>注意力机制的解释</h1><p>从上述例子中我们可以知道，注意力机制的引入目的是“有的放矢”地处理中间向量，提高模型效率。其实在自注意力机制概念提出之前，已经有其他意义比较相近的研究被提出：</p>
+<ol>
 <li><p>自下而上的基于显著性的注意力机制：</p>
 <ul>
 <li>maxpooling 最大池化</li>
 <li>geating 门控</li>
-</ul></li>
+</ul>
+</li>
 <li><p>自上而下的汇聚式注意力</p>
-<p>概念：从更高级别的表示或上下文信息开始，逐渐聚焦于更低级别的表示或局部信息</p>
-<aside>
-<p>💡 procedure:</p>
-<p>首先通过某种方式生成一个<strong>全局的上下文向量</strong>，通常是通过对整个输入序列做一次汇总或编码得到的。这个全局上下文向量可以被视为任务相关的高级表示，它包含了任务需要关注的重要信息。</p>
-<p>然后，针对输入序列中的每个元素，<strong>计算其与全局上下文向量之间的注意力权重</strong>。这些权重表示了每个元素对于全局上下文的重要性，即它们在给定任务中的相对重要程度。</p>
-<p>最后，根据计算得到的注意力权重，将各个元素的表示进行加权求和，得到最终的上下文表示。这个上下文表示综合了全局上下文和局部信息，可以用于后续的任务处理或决策。</p>
-</aside>
-<p>对于一个待加入注意力的输入序列<span
-class="math inline">\(X=(x_1,x_2,...,x_N)\)</span>，其中N表示信息项数目，设<span
-class="math inline">\(z\in\{1,2,...,N\}\)</span>表示被选择信息索引位置，给定一个和任务相关的查询（Query）向量q，则z=i的信息项的注意力值可以表示为：</p>
-<p><span class="math display">\[
-p(z=i|X,q)=softmax(s(x_i,q))
-\]</span></p>
-<p>其中<span
-class="math inline">\(s(x_i,q)\)</span>为注意力打分函数，一般采用缩放点积形式来定义。注意这里面的d表示输入信息的维度。</p>
-<p><span class="math display">\[
-s(x_i,q)=\frac{x_i^Tq}{\sqrt{d}}
-\]</span></p>
-<aside>
-<p>💡 用缩放点积形式定义注意力打分函数的原因</p>
-<ol type="1">
+<p> 概念：从更高级别的表示或上下文信息开始，逐渐聚焦于更低级别的表示或局部信息</p>
+ <aside>
+ 💡 procedure:
+
+<p> 首先通过某种方式生成一个<strong>全局的上下文向量</strong>，通常是通过对整个输入序列做一次汇总或编码得到的。这个全局上下文向量可以被视为任务相关的高级表示，它包含了任务需要关注的重要信息。</p>
+<p> 然后，针对输入序列中的每个元素，<strong>计算其与全局上下文向量之间的注意力权重</strong>。这些权重表示了每个元素对于全局上下文的重要性，即它们在给定任务中的相对重要程度。</p>
+<p> 最后，根据计算得到的注意力权重，将各个元素的表示进行加权求和，得到最终的上下文表示。这个上下文表示综合了全局上下文和局部信息，可以用于后续的任务处理或决策。</p>
+ </aside>
+
+<p> 对于一个待加入注意力的输入序列$X=(x_1,x_2,…,x_N)$，其中N表示信息项数目，设$z\in\{1,2,…,N\}$表示被选择信息索引位置，给定一个和任务相关的查询（Query）向量q，则z=i的信息项的注意力值可以表示为：</p>
+<p> $$<br> p(z=i|X,q)=softmax(s(x_i,q))<br> $$</p>
+<p> 其中$s(x_i,q)$为注意力打分函数，一般采用缩放点积形式来定义。注意这里面的d表示输入信息的维度。</p>
+<p> $$<br> s(x_i,q)=\frac{x_i^Tq}{\sqrt{d}}<br> $$</p>
+ <aside>
+ 💡 用缩放点积形式定义注意力打分函数的原因
+
+<ol>
 <li>数值稳定性：缩放点积可以通过对点积结果进行缩放，将注意力分数限制在一个合适的范围内，避免了数值过大或过小的问题。通过缩放，可以使得注意力分数在相对较小的范围内，更利于数值计算的稳定性。</li>
-<li>温度调节：缩放点积中的缩放因子通常称为温度参数（temperature
-parameter），可以调节注意力的分布形状。较高的温度会使得注意力更加平滑均匀，较低的温度会使得注意力更加集中和尖锐。温度参数的调节可以根据具体任务和需求来进行优化。
-</aside></li>
-</ol></li>
+<li>温度调节：缩放点积中的缩放因子通常称为温度参数（temperature parameter），可以调节注意力的分布形状。较高的温度会使得注意力更加平滑均匀，较低的温度会使得注意力更加集中和尖锐。温度参数的调节可以根据具体任务和需求来进行优化。</aside></li>
 </ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://0x6f6f.github.io/2023/09/21/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="28527">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="0x6f6f的小站">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/09/21/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2023-09-21 13:02:14" itemprop="dateCreated datePublished" datetime="2023-09-21T13:02:14+08:00">2023-09-21</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-09-20 14:14:07" itemprop="dateModified" datetime="2023-09-20T14:14:07+08:00">2023-09-20</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very
-first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for
-more info. If you get any problems when using Hexo, you can find the
-answer in <a
-target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or
-you can ask me on <a
-target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="quick-start">Quick Start</h2>
-<h3 id="create-a-new-post">Create a new post</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a
-target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="run-server">Run server</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="generate-static-files">Generate static files</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a
-target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="deploy-to-remote-sites">Deploy to remote sites</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a
-target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+</li>
+</ol>
 
       
     </div>
@@ -438,7 +545,7 @@ target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-count">3</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
