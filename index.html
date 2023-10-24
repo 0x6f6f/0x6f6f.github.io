@@ -398,10 +398,16 @@ Pages搭建个人博客 - 掘金 (juejin.cn)</a></p>
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2023-09-21 14:22:45 / Modified: 14:23:49" itemprop="dateCreated datePublished" datetime="2023-09-21T14:22:45+08:00">2023-09-21</time>
+              <time title="Created: 2023-09-21 14:22:45" itemprop="dateCreated datePublished" datetime="2023-09-21T14:22:45+08:00">2023-09-21</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-10-24 14:11:47" itemprop="dateModified" datetime="2023-10-24T14:11:47+08:00">2023-10-24</time>
+              </span>
 
           
 
@@ -414,62 +420,85 @@ Pages搭建个人博客 - 掘金 (juejin.cn)</a></p>
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="NLP中seq2seq结构对self-attention机制的引入"><a href="#NLP中seq2seq结构对self-attention机制的引入" class="headerlink" title="NLP中seq2seq结构对self attention机制的引入"></a>NLP中seq2seq结构对self attention机制的引入</h1><p>序列转序列结构常用于机器翻译，其分为编码器和解码器两部分。其中，编码器负责将输入文本转译为上下文编码向量，解码器负责对其进行解码，翻译为目标语言。</p>
-<p><img src="1.png" alt="Encoder-Decoder架构"></p>
+          <h1
+id="nlp中seq2seq结构对self-attention机制的引入">NLP中seq2seq结构对self
+attention机制的引入</h1>
+<p>序列转序列结构常用于机器翻译，其分为编码器和解码器两部分。其中，编码器负责将输入文本转译为上下文编码向量，解码器负责对其进行解码，翻译为目标语言。</p>
+<img src="/2023/09/21/ViT%E8%AE%B0%E5%BD%95/1.png" class="" title="Encoder-Decoder架构">
 <p>该上下文编码向量长度一般是固定的，导致模型对于变长输入文本的处理能力不一致。为了提升模型对于该序列的利用能力，学界引入了注意力机制根据输入序列的不同部分为其赋予不同的注意力权重。</p>
 <p>对注意力机制进行抽象，可以归结为Q,K,V三个矩阵的计算，如下图所示：</p>
-<p><img src="2.png" alt="QKV机制下的注意力"></p>
+<img src="/2023/09/21/ViT%E8%AE%B0%E5%BD%95/2.png" class="" title="QKV机制下的注意力">
 <p>一个注意力层会在内部维护q,k,v三个权重矩阵，分别对应查询权重、键权重、值权重三方面权重。将输入序列向量与q,k,v矩阵分别相乘，就得到了Q（Query，查询向量，包含当前位置的输出序列信息，用于计算注意力权重）,K（Keys，键向量，包含序列中每个位置的信息，用于计算注意力权重）,V（Values，值向量，包含输入序列中每个位置的具体数值信息，用于根据注意力权重计算输出的上下文向量值）三个向量。</p>
-<p>可以使用下面的公式表示从输入向量 x、待学习的 qkv 三个权重矩阵出发，得到注意力值的计算过程：</p>
+<p>可以使用下面的公式表示从输入向量 x、待学习的 qkv
+三个权重矩阵出发，得到注意力值的计算过程：</p>
 <aside>
-💡 1. 首先，对输入向量 x 进行线性变换得到查询（q）、键（k）和值（v）的向量表示。其中，$W_q$、 $W_q$和  $W_q$分别是待学习的查询、键和值的权重矩阵：
-
-<p>$$<br>q = W_q \cdot x \<br>k = W_k \cdot x \<br>v = W_v \cdot x \<br>$$</p>
-<ol>
-<li>接下来，通过计算查询向量 q 和键向量 k 之间的相似度来计算注意力权重，其中，$d_k$是查询和键的向量维度：</li>
+<p>💡 1. 首先，对输入向量 x
+进行线性变换得到查询（q）、键（k）和值（v）的向量表示。其中，<span
+class="math inline">\(W_q\)</span>、 <span
+class="math inline">\(W_q\)</span>和 <span
+class="math inline">\(W_q\)</span>分别是待学习的查询、键和值的权重矩阵：</p>
+<p><span class="math display">\[
+q = W_q \cdot x \\
+k = W_k \cdot x \\
+v = W_v \cdot x \\
+\]</span></p>
+<ol type="1">
+<li>接下来，通过计算查询向量 q 和键向量 k
+之间的相似度来计算注意力权重，其中，<span
+class="math inline">\(d_k\)</span>是查询和键的向量维度：</li>
 </ol>
-<p>$$<br>\text{Attention}(q, k) = \text{softmax}\left(\frac{q \cdot k^T}{\sqrt{d_k}}\right)<br>$$</p>
-<ol>
-<li>最后，根据注意力权重对值向量 v 进行加权求和，得到注意力层输出的上下文向量：</li>
+<p><span class="math display">\[
+\text{Attention}(q, k) = \text{softmax}\left(\frac{q \cdot
+k^T}{\sqrt{d_k}}\right)
+\]</span></p>
+<ol type="1">
+<li>最后，根据注意力权重对值向量 v
+进行加权求和，得到注意力层输出的上下文向量：</li>
 </ol>
-<p>$$<br>\text{Value} = \text{Attention}(q, k) \cdot v<br>$$</p>
+<p><span class="math display">\[
+\text{Value} = \text{Attention}(q, k) \cdot v
+\]</span></p>
 </aside>
-
 <p>对上述操作的理解：</p>
 <ul>
 <li>qkv三个矩阵的计算可以理解为使用对应权重对输入向量的线性变换</li>
 <li></li>
 </ul>
-<h1 id="注意力机制的解释"><a href="#注意力机制的解释" class="headerlink" title="注意力机制的解释"></a>注意力机制的解释</h1><p>从上述例子中我们可以知道，注意力机制的引入目的是“有的放矢”地处理中间向量，提高模型效率。其实在自注意力机制概念提出之前，已经有其他意义比较相近的研究被提出：</p>
-<ol>
+<h1 id="注意力机制的解释">注意力机制的解释</h1>
+<p>从上述例子中我们可以知道，注意力机制的引入目的是“有的放矢”地处理中间向量，提高模型效率。其实在自注意力机制概念提出之前，已经有其他意义比较相近的研究被提出：</p>
+<ol type="1">
 <li><p>自下而上的基于显著性的注意力机制：</p>
 <ul>
 <li>maxpooling 最大池化</li>
 <li>geating 门控</li>
-</ul>
-</li>
+</ul></li>
 <li><p>自上而下的汇聚式注意力</p>
-<p> 概念：从更高级别的表示或上下文信息开始，逐渐聚焦于更低级别的表示或局部信息</p>
- <aside>
- 💡 procedure:
-
-<p> 首先通过某种方式生成一个<strong>全局的上下文向量</strong>，通常是通过对整个输入序列做一次汇总或编码得到的。这个全局上下文向量可以被视为任务相关的高级表示，它包含了任务需要关注的重要信息。</p>
-<p> 然后，针对输入序列中的每个元素，<strong>计算其与全局上下文向量之间的注意力权重</strong>。这些权重表示了每个元素对于全局上下文的重要性，即它们在给定任务中的相对重要程度。</p>
-<p> 最后，根据计算得到的注意力权重，将各个元素的表示进行加权求和，得到最终的上下文表示。这个上下文表示综合了全局上下文和局部信息，可以用于后续的任务处理或决策。</p>
- </aside>
-
-<p> 对于一个待加入注意力的输入序列$X=(x_1,x_2,…,x_N)$，其中N表示信息项数目，设$z\in\{1,2,…,N\}$表示被选择信息索引位置，给定一个和任务相关的查询（Query）向量q，则z=i的信息项的注意力值可以表示为：</p>
-<p> $$<br> p(z=i|X,q)=softmax(s(x_i,q))<br> $$</p>
-<p> 其中$s(x_i,q)$为注意力打分函数，一般采用缩放点积形式来定义。注意这里面的d表示输入信息的维度。</p>
-<p> $$<br> s(x_i,q)=\frac{x_i^Tq}{\sqrt{d}}<br> $$</p>
- <aside>
- 💡 用缩放点积形式定义注意力打分函数的原因
-
-<ol>
+<p>概念：从更高级别的表示或上下文信息开始，逐渐聚焦于更低级别的表示或局部信息</p>
+<aside>
+<p>💡 procedure:</p>
+<p>首先通过某种方式生成一个<strong>全局的上下文向量</strong>，通常是通过对整个输入序列做一次汇总或编码得到的。这个全局上下文向量可以被视为任务相关的高级表示，它包含了任务需要关注的重要信息。</p>
+<p>然后，针对输入序列中的每个元素，<strong>计算其与全局上下文向量之间的注意力权重</strong>。这些权重表示了每个元素对于全局上下文的重要性，即它们在给定任务中的相对重要程度。</p>
+<p>最后，根据计算得到的注意力权重，将各个元素的表示进行加权求和，得到最终的上下文表示。这个上下文表示综合了全局上下文和局部信息，可以用于后续的任务处理或决策。</p>
+</aside>
+<p>对于一个待加入注意力的输入序列<span
+class="math inline">\(X=(x_1,x_2,...,x_N)\)</span>，其中N表示信息项数目，设<span
+class="math inline">\(z\in\{1,2,...,N\}\)</span>表示被选择信息索引位置，给定一个和任务相关的查询（Query）向量q，则z=i的信息项的注意力值可以表示为：</p>
+<p><span class="math display">\[
+p(z=i|X,q)=softmax(s(x_i,q))
+\]</span></p>
+<p>其中<span
+class="math inline">\(s(x_i,q)\)</span>为注意力打分函数，一般采用缩放点积形式来定义。注意这里面的d表示输入信息的维度。</p>
+<p><span class="math display">\[
+s(x_i,q)=\frac{x_i^Tq}{\sqrt{d}}
+\]</span></p>
+<aside>
+<p>💡 用缩放点积形式定义注意力打分函数的原因</p>
+<ol type="1">
 <li>数值稳定性：缩放点积可以通过对点积结果进行缩放，将注意力分数限制在一个合适的范围内，避免了数值过大或过小的问题。通过缩放，可以使得注意力分数在相对较小的范围内，更利于数值计算的稳定性。</li>
-<li>温度调节：缩放点积中的缩放因子通常称为温度参数（temperature parameter），可以调节注意力的分布形状。较高的温度会使得注意力更加平滑均匀，较低的温度会使得注意力更加集中和尖锐。温度参数的调节可以根据具体任务和需求来进行优化。</aside></li>
-</ol>
-</li>
+<li>温度调节：缩放点积中的缩放因子通常称为温度参数（temperature
+parameter），可以调节注意力的分布形状。较高的温度会使得注意力更加平滑均匀，较低的温度会使得注意力更加集中和尖锐。温度参数的调节可以根据具体任务和需求来进行优化。
+</aside></li>
+</ol></li>
 </ol>
 
       
@@ -639,6 +668,59 @@ Pages搭建个人博客 - 掘金 (juejin.cn)</a></p>
   
 
   
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 
