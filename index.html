@@ -115,7 +115,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">3</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">4</span></a>
 
   </li>
   </ul>
@@ -143,6 +143,100 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://0x6f6f.github.io/2023/10/27/%E8%87%AA%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="28527">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="0x6f6f的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/10/27/%E8%87%AA%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/" class="post-title-link" itemprop="url">自注意力机制</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-10-27 17:33:33 / Modified: 17:37:45" itemprop="dateCreated datePublished" datetime="2023-10-27T17:33:33+08:00">2023-10-27</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <ol type="1">
+<li><p>Background</p>
+<p>目的：从背景信息中挑选对当前任务目标更关键的信息。</p>
+<p>应用场景：序列数据处理</p>
+<p>机制分类：自注意力机制、空间注意力机制、时间注意力机制。</p></li>
+<li><p>自注意力机制</p>
+<p>NLP中自注意力机制的计算步骤：</p>
+<ul>
+<li><p>预处理输入数据X</p></li>
+<li><p>初始化权重<span
+class="math inline">\(W_Q,W_K,W_V\)</span></p></li>
+<li><p>计算K,Q,V矩阵（仅限于输入部分的编码过程，encoder输出到decoder时的QKV不通过该方式计算）</p>
+<p><span class="math display">\[
+  \begin{cases}K=XW_K\\Q=XW_Q\\V=XW_V\end{cases}
+  \]</span></p></li>
+<li><p>计算注意力得分：<span
+class="math inline">\(softmax(\frac{QK^T}{\sqrt{d_k}})\)</span>，然后再和V相乘</p></li>
+<li><p>得到自注意力矩阵<span
+class="math inline">\(softmax(\frac{QK^T}{\sqrt{d_k}})V\)</span></p></li>
+</ul>
+<p>其中，输入矩阵X通过乘以对应权重会生成对应的QKV矩阵，分别表征：</p>
+<ul>
+<li>Q：查询向量，代表需要关注的元素或者位置。</li>
+<li>K：键向量，代表参考元素或者位置。作用是用于提供参考信息，来确定序列中某一位置的元素相比于其他位置的元素的相关性。</li>
+<li>V：值向量，表示实际信息。输入向量X所在的空间不一定适用所有类型的任务的需要，比如一个数据在低秩空间可能是线性不可分的，但将其映射到高维空间后就可以找到一个明显的分界点。因此通过乘以一个可学习的权重矩阵<span
+class="math inline">\(W_V\)</span>，我们可以自适应的调节模型对输入向量的映射，从而提升模型对输入信息的学习能力。</li>
+</ul>
+<p>然后，我们关注一下注意力得分的计算公式：</p>
+<p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/10/27/%E8%87%AA%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -178,7 +272,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-10-24 14:34:52" itemprop="dateModified" datetime="2023-10-24T14:34:52+08:00">2023-10-24</time>
+                <time title="Modified: 2023-10-24 14:36:51" itemprop="dateModified" datetime="2023-10-24T14:36:51+08:00">2023-10-24</time>
               </span>
 
           
@@ -480,7 +574,7 @@ attention机制的引入</h1>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-count">4</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

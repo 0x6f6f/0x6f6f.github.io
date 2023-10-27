@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"0x6f6f.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Background 目的：从背景信息中挑选对当前任务目标更关键的信息。 应用场景：序列数据处理 机制分类：自注意力机制、空间注意力机制、时间注意力机制。 自注意力机制 NLP中自注意力机制的计算步骤：  预处理输入数据X 初始化权重\(W_Q,W_K,W_V\) 计算K,Q,V矩阵（仅限于输入部分的编码过程，encoder输出到decoder时的QKV不通过该方式计算）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自注意力机制">
+<meta property="og:url" content="https://0x6f6f.github.io/2023/10/27/%E8%87%AA%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/index.html">
+<meta property="og:site_name" content="0x6f6f的小站">
+<meta property="og:description" content="Background 目的：从背景信息中挑选对当前任务目标更关键的信息。 应用场景：序列数据处理 机制分类：自注意力机制、空间注意力机制、时间注意力机制。 自注意力机制 NLP中自注意力机制的计算步骤：  预处理输入数据X 初始化权重\(W_Q,W_K,W_V\) 计算K,Q,V矩阵（仅限于输入部分的编码过程，encoder输出到decoder时的QKV不通过该方式计算）">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://0x6f6f.github.io/2023/10/27/%E8%87%AA%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/1.png">
+<meta property="og:image" content="https://0x6f6f.github.io/2023/10/27/%E8%87%AA%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/2.png">
+<meta property="og:image" content="https://0x6f6f.github.io/2023/10/27/%E8%87%AA%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/3.png">
+<meta property="article:published_time" content="2023-10-27T09:33:33.000Z">
+<meta property="article:modified_time" content="2023-10-27T09:37:45.222Z">
+<meta property="article:author" content="28527">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://0x6f6f.github.io/2023/10/27/%E8%87%AA%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/1.png">
+
+<link rel="canonical" href="https://0x6f6f.github.io/2023/10/27/%E8%87%AA%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>自注意力机制 | 0x6f6f的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">0x6f6f的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">4</span></a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://0x6f6f.github.io/2023/10/27/%E8%87%AA%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="28527">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="0x6f6f的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          自注意力机制
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-10-27 17:33:33 / Modified: 17:37:45" itemprop="dateCreated datePublished" datetime="2023-10-27T17:33:33+08:00">2023-10-27</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <ol type="1">
+<li><p>Background</p>
+<p>目的：从背景信息中挑选对当前任务目标更关键的信息。</p>
+<p>应用场景：序列数据处理</p>
+<p>机制分类：自注意力机制、空间注意力机制、时间注意力机制。</p></li>
+<li><p>自注意力机制</p>
+<p>NLP中自注意力机制的计算步骤：</p>
+<ul>
+<li><p>预处理输入数据X</p></li>
+<li><p>初始化权重<span
+class="math inline">\(W_Q,W_K,W_V\)</span></p></li>
+<li><p>计算K,Q,V矩阵（仅限于输入部分的编码过程，encoder输出到decoder时的QKV不通过该方式计算）</p>
+<p><span class="math display">\[
+  \begin{cases}K=XW_K\\Q=XW_Q\\V=XW_V\end{cases}
+  \]</span></p></li>
+<li><p>计算注意力得分：<span
+class="math inline">\(softmax(\frac{QK^T}{\sqrt{d_k}})\)</span>，然后再和V相乘</p></li>
+<li><p>得到自注意力矩阵<span
+class="math inline">\(softmax(\frac{QK^T}{\sqrt{d_k}})V\)</span></p></li>
+</ul>
+<p>其中，输入矩阵X通过乘以对应权重会生成对应的QKV矩阵，分别表征：</p>
+<ul>
+<li>Q：查询向量，代表需要关注的元素或者位置。</li>
+<li>K：键向量，代表参考元素或者位置。作用是用于提供参考信息，来确定序列中某一位置的元素相比于其他位置的元素的相关性。</li>
+<li>V：值向量，表示实际信息。输入向量X所在的空间不一定适用所有类型的任务的需要，比如一个数据在低秩空间可能是线性不可分的，但将其映射到高维空间后就可以找到一个明显的分界点。因此通过乘以一个可学习的权重矩阵<span
+class="math inline">\(W_V\)</span>，我们可以自适应的调节模型对输入向量的映射，从而提升模型对输入信息的学习能力。</li>
+</ul>
+<p>然后，我们关注一下注意力得分的计算公式：</p>
+<p><span id="more"></span></p>
+<ul>
+<li><p>首先是Q和<span
+class="math inline">\(K^T\)</span>的内积，这一项的意义在于度量Q和K两个向量的相似度。</p>
+<p>考虑一组简单的二维向量：</p>
+<p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#固定的vector_a</span></span><br><span class="line">vector_a = np.array([<span class="number">1</span>, <span class="number">0</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment">#夹角变化的vector_b，模长也是1，在单位圆上滑动</span></span><br><span class="line">angle_degrees = [<span class="number">15</span>, <span class="number">45</span>, <span class="number">75</span>, <span class="number">105</span>]</span><br><span class="line">vector_b = np.array([np.cos(np.radians(angle)), np.sin(np.radians(angle))])</span><br></pre></td></tr></table></figure></p>
+<p>我们编写如下脚本做一下可视化：</p>
+<p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建一个模长固定的向量A</span></span><br><span class="line">vector_a = np.array([<span class="number">1</span>, <span class="number">0</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建一个包含不同夹角的列表</span></span><br><span class="line">angle_degrees = [<span class="number">15</span>, <span class="number">45</span>, <span class="number">75</span>, <span class="number">105</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建一个子图</span></span><br><span class="line">fig, axes = plt.subplots(<span class="number">1</span>, <span class="built_in">len</span>(angle_degrees), figsize=(<span class="number">16</span>, <span class="number">4</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建一个列表来存储内积值</span></span><br><span class="line">dot_products = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i, angle <span class="keyword">in</span> <span class="built_in">enumerate</span>(angle_degrees):</span><br><span class="line">    <span class="comment"># 计算向量B的坐标</span></span><br><span class="line">    vector_b = np.array([np.cos(np.radians(angle)), np.sin(np.radians(angle))])</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 计算内积</span></span><br><span class="line">    dot_product = np.dot(vector_a, vector_b)</span><br><span class="line">    dot_products.append(dot_product)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 创建Seaborn风格的图形</span></span><br><span class="line">    sns.<span class="built_in">set</span>()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 绘制向量</span></span><br><span class="line">    axes[i].quiver(<span class="number">0</span>, <span class="number">0</span>, vector_a[<span class="number">0</span>], vector_a[<span class="number">1</span>], angles=<span class="string">&#x27;xy&#x27;</span>, scale_units=<span class="string">&#x27;xy&#x27;</span>, scale=<span class="number">1</span>, color=<span class="string">&#x27;r&#x27;</span>, label=<span class="string">&#x27;Vector A&#x27;</span>)</span><br><span class="line">    axes[i].quiver(<span class="number">0</span>, <span class="number">0</span>, vector_b[<span class="number">0</span>], vector_b[<span class="number">1</span>], angles=<span class="string">&#x27;xy&#x27;</span>, scale_units=<span class="string">&#x27;xy&#x27;</span>, scale=<span class="number">1</span>, color=<span class="string">&#x27;b&#x27;</span>, label=<span class="string">f&#x27;Vector B (<span class="subst">&#123;angle&#125;</span> degrees)&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 设置坐标轴范围</span></span><br><span class="line">    axes[i].set_xlim(-<span class="number">1.2</span>, <span class="number">1.2</span>)</span><br><span class="line">    axes[i].set_ylim(-<span class="number">1.2</span>, <span class="number">1.2</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 添加标签</span></span><br><span class="line">    axes[i].set_xlabel(<span class="string">&#x27;X-axis&#x27;</span>)</span><br><span class="line">    axes[i].set_ylabel(<span class="string">&#x27;Y-axis&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 显示夹角和内积值</span></span><br><span class="line">    axes[i].text(-<span class="number">0.5</span>, -<span class="number">0.2</span>, <span class="string">f&#x27;Angle: <span class="subst">&#123;angle&#125;</span> degrees&#x27;</span>, ha=<span class="string">&#x27;left&#x27;</span>)</span><br><span class="line">    axes[i].text(-<span class="number">0.5</span>, -<span class="number">0.4</span>, <span class="string">f&#x27;Dot Product: <span class="subst">&#123;dot_product:<span class="number">.2</span>f&#125;</span>&#x27;</span>, ha=<span class="string">&#x27;left&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 添加网格</span></span><br><span class="line">    axes[i].grid(<span class="literal">True</span>)</span><br><span class="line">    axes[i].legend(loc=<span class="string">&#x27;lower left&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置子图之间的间隔</span></span><br><span class="line">plt.tight_layout()</span><br><span class="line">plt.savefig(<span class="string">&#x27;/data/mmdSTTL/文档/compare.jpg&#x27;</span>)</span><br></pre></td></tr></table></figure></p>
+<p>有如下的对比：</p>
+<p><img src="/2023/10/27/%E8%87%AA%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/1.png" class="" title="向量内积与向量相似度的关系"></p>
+<p>可见随着夹角从锐角向钝角变化，两个向量的内积值越来越小。因此我们可以认为两个向量内积值越大，它们之间的相似程度越高。因此可以用向量之间的内积值度量其相似性。</p>
+<p>另外，由于Q和K都是来自于输入X的变换，而向量X可能不一定是方阵，所以必须得让K转置一下才能让两个向量求内积。所以体现到注意力公式里面就是<span
+class="math inline">\(QK^T\)</span>。</p></li>
+<li><p>然后是后续处理过程。我们通过除以对内积值做了一次重整，即<span
+class="math inline">\(\frac{QK^T}{\sqrt{d_k}}\)</span>。这样做的意义在于缩放方差，使得方差较大的内积矩阵在softmax后尽量平滑。我们也可以通过如下脚本做一下可视化：</p>
+<p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建一个复杂的输入矩阵</span></span><br><span class="line">x = np.array([[<span class="number">1</span>, <span class="number">5</span>, <span class="number">3</span>, <span class="number">8</span>],</span><br><span class="line">              [<span class="number">2</span>, <span class="number">7</span>, <span class="number">4</span>, <span class="number">9</span>],</span><br><span class="line">              [<span class="number">6</span>, <span class="number">2</span>, <span class="number">7</span>, <span class="number">3</span>],</span><br><span class="line">              [<span class="number">5</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">6</span>]])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义未除以sqrt(d_k)的softmax函数</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">softmax</span>(<span class="params">x</span>):</span><br><span class="line">    e_x = np.exp(x - np.<span class="built_in">max</span>(x))</span><br><span class="line">    <span class="keyword">return</span> e_x / e_x.<span class="built_in">sum</span>(axis=<span class="number">0</span>, keepdims=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义除以sqrt(d_k)的softmax函数</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">scaled_softmax</span>(<span class="params">x, sqrt_dk</span>):</span><br><span class="line">    e_x = np.exp(x * sqrt_dk - np.<span class="built_in">max</span>(x))</span><br><span class="line">    <span class="keyword">return</span> e_x / e_x.<span class="built_in">sum</span>(axis=<span class="number">0</span>, keepdims=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 假设 d_k = 4</span></span><br><span class="line">sqrt_dk = <span class="number">1.0</span> / np.sqrt(<span class="number">4</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 计算未除以sqrt(d_k)和除以sqrt(d_k)后的softmax输出</span></span><br><span class="line">softmax_output = softmax(x)</span><br><span class="line">scaled_softmax_output = scaled_softmax(x, sqrt_dk)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建热图来比较两者</span></span><br><span class="line">fig, axes = plt.subplots(<span class="number">1</span>, <span class="number">2</span>, figsize=(<span class="number">12</span>, <span class="number">4</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 绘制未除以sqrt(d_k)的softmax输出</span></span><br><span class="line">cax1 = axes[<span class="number">0</span>].matshow(softmax_output, cmap=<span class="string">&#x27;viridis&#x27;</span>, aspect=<span class="string">&#x27;auto&#x27;</span>)</span><br><span class="line">plt.colorbar(cax1, ax=axes[<span class="number">0</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在每个格子中标注数字</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(x.shape[<span class="number">0</span>]):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(x.shape[<span class="number">1</span>]):</span><br><span class="line">        axes[<span class="number">0</span>].text(j, i, <span class="string">f&#x27;<span class="subst">&#123;softmax_output[i, j]:<span class="number">.2</span>f&#125;</span>&#x27;</span>, ha=<span class="string">&#x27;center&#x27;</span>, va=<span class="string">&#x27;center&#x27;</span>, color=<span class="string">&#x27;w&#x27;</span>)</span><br><span class="line"></span><br><span class="line">axes[<span class="number">0</span>].set_title(<span class="string">&#x27;Softmax (Unscaled)&#x27;</span>)</span><br><span class="line">axes[<span class="number">0</span>].xaxis.set_ticks_position(<span class="string">&#x27;top&#x27;</span>)</span><br><span class="line">axes[<span class="number">0</span>].xaxis.set_label_position(<span class="string">&#x27;top&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 绘制除以sqrt(d_k)后的softmax输出</span></span><br><span class="line">cax2 = axes[<span class="number">1</span>].matshow(scaled_softmax_output, cmap=<span class="string">&#x27;viridis&#x27;</span>, aspect=<span class="string">&#x27;auto&#x27;</span>)</span><br><span class="line">plt.colorbar(cax2, ax=axes[<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在每个格子中标注数字</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(x.shape[<span class="number">0</span>]):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(x.shape[<span class="number">1</span>]):</span><br><span class="line">        axes[<span class="number">1</span>].text(j, i, <span class="string">f&#x27;<span class="subst">&#123;scaled_softmax_output[i, j]:<span class="number">.2</span>f&#125;</span>&#x27;</span>, ha=<span class="string">&#x27;center&#x27;</span>, va=<span class="string">&#x27;center&#x27;</span>, color=<span class="string">&#x27;w&#x27;</span>)</span><br><span class="line"></span><br><span class="line">axes[<span class="number">1</span>].set_title(<span class="string">&#x27;Scaled Softmax&#x27;</span>)</span><br><span class="line">axes[<span class="number">1</span>].xaxis.set_ticks_position(<span class="string">&#x27;top&#x27;</span>)</span><br><span class="line">axes[<span class="number">1</span>].xaxis.set_label_position(<span class="string">&#x27;top&#x27;</span>)</span><br><span class="line"></span><br><span class="line">plt.tight_layout()</span><br><span class="line">plt.savefig(<span class="string">&#x27;/data/mmdSTTL/文档/compare.jpg&#x27;</span>)</span><br></pre></td></tr></table></figure></p>
+<p>上述脚本的输出结果如下：</p>
+<p><img src="/2023/10/27/%E8%87%AA%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/2.png" class="" title="scale对softmax输出的影响"></p>
+<blockquote>
+<p>Terminal output:</p>
+<p>Regular Softmax Output Variance: 0.004457626216288582 Scaled Softmax
+Output Variance: 0.0011144065540721454</p>
+</blockquote>
+<p>可以看到，在scale（该例子中<span
+class="math inline">\(d_k=4\)</span>，即维度为4*4）后，softmax的输出矩阵方差变得更小，输出结果更加平滑。</p>
+<p>至于softmax本身，老生常谈了，他的作用就是使得分布拉伸到总和为1的区间，使得输出值具有概率分布特征，可以用于度量相关性。我们对一个输入的一位序列做一下softmax并校验其性质：</p>
+<p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成一个随机的一维序列</span></span><br><span class="line">sequence = np.random.rand(<span class="number">10</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 计算 softmax</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">softmax</span>(<span class="params">x</span>):</span><br><span class="line">    e_x = np.exp(x - np.<span class="built_in">max</span>(x))</span><br><span class="line">    <span class="keyword">return</span> e_x / e_x.<span class="built_in">sum</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用 softmax 进行平滑</span></span><br><span class="line">smoothed_sequence = softmax(sequence)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建数据框用于Seaborn绘图</span></span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line">data = pd.DataFrame(&#123;<span class="string">&#x27;Index&#x27;</span>: <span class="built_in">range</span>(<span class="built_in">len</span>(sequence)), <span class="string">&#x27;Original Value&#x27;</span>: sequence, <span class="string">&#x27;Smoothed Value&#x27;</span>: smoothed_sequence&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用Seaborn绘制散点图，并连接同一个序列中的点</span></span><br><span class="line">plt.figure(figsize=(<span class="number">10</span>, <span class="number">6</span>))</span><br><span class="line">plt.title(<span class="string">&quot;Connected Scatter Plot of Original and Smoothed Sequence&quot;</span>)</span><br><span class="line">plt.xlabel(<span class="string">&quot;Index&quot;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&quot;Value&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 绘制原始序列的点并添加标签</span></span><br><span class="line">sns.lineplot(data=data, x=<span class="string">&#x27;Index&#x27;</span>, y=<span class="string">&#x27;Original Value&#x27;</span>, label=<span class="string">f&quot;Original Sequence: sum=<span class="subst">&#123;sequence.<span class="built_in">sum</span>()&#125;</span>&quot;</span>, color=<span class="string">&#x27;b&#x27;</span>, marker=<span class="string">&quot;o&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 绘制平滑后的序列的点并添加标签</span></span><br><span class="line">sns.lineplot(data=data, x=<span class="string">&#x27;Index&#x27;</span>, y=<span class="string">&#x27;Smoothed Value&#x27;</span>, label=<span class="string">f&quot;Smoothed Sequence: sum=<span class="subst">&#123;smoothed_sequence.<span class="built_in">sum</span>()&#125;</span>&quot;</span>, color=<span class="string">&#x27;r&#x27;</span>, marker=<span class="string">&quot;o&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加图例</span></span><br><span class="line">plt.legend()</span><br><span class="line">plt.savefig(<span class="string">&#x27;/data/mmdSTTL/文档/softmax.jpg&#x27;</span>)</span><br></pre></td></tr></table></figure></p>
+<p><img src="/2023/10/27/%E8%87%AA%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/3.png" class="" title="softmax的作用"></p>
+<p>比如我们看上面这张图里面，softmax
+函数将输入的元素转化为一个概率分布，使得序列的每个元素都在 0 到 1
+的范围内，并且所有元素的和等于 1。</p></li>
+</ul>
+<p>最后我们将结果乘上值矩阵V，就等于我们拿着算出来的权重给被查询的转换后的分布赋了一次权，得到了集中注意力后的特征图。因为<span
+class="math inline">\(QK^T\)</span>是<span
+class="math inline">\((m,n)\times(n,m)=(m,m)\)</span>，所以可以直接乘上规模为<span
+class="math inline">\((m,n)\)</span>的矩阵<span
+class="math inline">\(V\)</span>。</p></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/09/21/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%B8%E5%85%B3/" rel="prev" title="服务器相关">
+      <i class="fa fa-chevron-left"></i> 服务器相关
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">28527</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/0x6f6f" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;0x6f6f" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:lvdifine@gmail.com" title="E-Mail → mailto:lvdifine@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">28527</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
