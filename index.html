@@ -115,7 +115,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">4</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">5</span></a>
 
   </li>
   </ul>
@@ -143,6 +143,133 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://0x6f6f.github.io/2023/12/31/DETR-survey/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="28527">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="0x6f6f的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/12/31/DETR-survey/" class="post-title-link" itemprop="url">DETR-survey</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-12-31 00:15:11 / Modified: 00:33:16" itemprop="dateCreated datePublished" datetime="2023-12-31T00:15:11+08:00">2023-12-31</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1
+id="accuracy-efficiency-and-expansion-surveying-the-advancements-in-detr-during-2021-2023">Accuracy,
+Efficiency, and Expansion: Surveying the Advancements in DETR during
+2021-2023</h1>
+<h1 id="abstract">Abstract</h1>
+<p><strong>DEtection TRansformer (DETR)</strong> is a framework for
+object detection that views it as a direct set prediction problem,
+removing the need for hand-designed components and utilizing a
+transformer encoder-Decoder architecture to improve the accuracy and
+efficiency of object detection. Within two years, Detection Transformer
+(DETR) has undergone a remarkable transformation. This survey dissects
+key advancements, analyzes its current state, and ponders its future,
+revealing how DETR redefines object detection.</p>
+<p>Key Words: Object Detection, Transformer, Detection Transformer</p>
+<h1 id="introduction">Introduction</h1>
+<p><strong>Object Detection</strong> refers to the task of automatically
+identifying and localizing objects within an image or video. It involves
+using computer vision techniques, such as deep learning models, to
+analyze and classify regions of an image that contain objects of
+interest. As a fundamental building block of computer vision, object
+detection has undergone a remarkable transformation in recent years.
+Early efforts relied on meticulously crafted features and laborious
+two-stage pipelines, struggling to achieve both accuracy and efficiency.
+However, the emergence of <strong>DETR (Detection Transformer)</strong>
+in 2020 marks a pivotal moment, introducing a novel paradigm that
+transcends limitations and unveils exciting possibilities for the future
+of object detection.</p>
+<img src="/2023/12/31/DETR-survey/image-20231226164055-s6sqtfv.png" class="" title="Overall-Structure-of-DETR">
+<p>DETR views object detection as a set prediction problem and
+introduces a remarkably concise pipeline for object detection. It
+involves using a <strong>Convolutional Neural Network (CNN)</strong> to
+extract foundational features, which are then input into a Transformer
+for relationship modeling. The resulting output is matched with ground
+truth on the image using a bipartite graph matching algorithm. The
+detailed methodology of DETR is illustrated in the above diagram, and
+its key design inceptions include:</p>
+<ol type="1">
+<li><p><strong>Modeling object detection as a set prediction
+problem:</strong></p>
+<p>DETR conceptualizes object detection as a set prediction problem.
+Instead of treating each object individually, DETR aims to predict the
+entire set of objects collectively. This global perspective is a
+departure from the conventional paradigm.</p></li>
+<li><p><strong>Bipartite Matching for Label Assignment:</strong></p>
+<p>To accomplish label assignment, DETR employs a bipartite matching
+strategy. This involves using the Hungarian algorithm, a combinatorial
+optimization algorithm, to determine the optimal matching between the
+predicted objects and the ground truth. This approach ensures effective
+and accurate label assignment.</p></li>
+<li><p><strong>Transformer-based Encoder-Decoder Structure:</strong></p>
+<p>DETR leverages the Transformer architecture with an encoder-Decoder
+structure. This choice transforms object detection into an end-to-end
+problem, eliminating the need for post-processing steps like Non-Maximum
+Suppression (NMS). The Transformer's attention mechanism enables global
+context understanding, contributing to improved detection
+accuracy.</p></li>
+<li><p><strong>Avoidance of handcrafted anchor priors:</strong></p>
+<p>Unlike traditional methods that rely on manually defined anchor
+priors, DETR avoids such handcrafted position prior information. This is
+achieved through its set-based approach, making the model more flexible
+and less dependent on predefined anchor boxes.</p></li>
+</ol>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/12/31/DETR-survey/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -586,7 +713,7 @@ attention机制的引入</h1>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-count">5</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

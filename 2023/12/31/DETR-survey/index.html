@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"0x6f6f.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Accuracy, Efficiency, and Expansion: Surveying the Advancements in DETR during 2021-2023 Abstract DEtection TRansformer (DETR) is a framework for object detection that views it as a direct set pr">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DETR-survey">
+<meta property="og:url" content="https://0x6f6f.github.io/2023/12/31/DETR-survey/index.html">
+<meta property="og:site_name" content="0x6f6f的小站">
+<meta property="og:description" content="Accuracy, Efficiency, and Expansion: Surveying the Advancements in DETR during 2021-2023 Abstract DEtection TRansformer (DETR) is a framework for object detection that views it as a direct set pr">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://0x6f6f.github.io/2023/12/31/DETR-survey/image-20231226164055-s6sqtfv.png">
+<meta property="og:image" content="https://0x6f6f.github.io/2023/12/31/DETR-survey/assets/kmind-20231229203315-83scjez.png">
+<meta property="og:image" content="https://0x6f6f.github.io/2023/12/31/DETR-survey/assets/image-20231227205901-986pvkx.png">
+<meta property="og:image" content="https://0x6f6f.github.io/2023/12/31/DETR-survey/assets/image-20231228152337-lnayt1f.png">
+<meta property="og:image" content="https://0x6f6f.github.io/2023/12/31/DETR-survey/assets/image-20231228184906-bie8yht.png">
+<meta property="og:image" content="https://0x6f6f.github.io/2023/12/31/DETR-survey/assets/image-20231229135747-nf4s2ce.png">
+<meta property="og:image" content="https://0x6f6f.github.io/2023/12/31/DETR-survey/assets/image-20231229161812-o3w6slw.png">
+<meta property="og:image" content="https://0x6f6f.github.io/2023/12/31/DETR-survey/assets/image-20231229195450-64y82kf.png">
+<meta property="og:image" content="https://0x6f6f.github.io/2023/12/31/DETR-survey/assets/image-20231229170436-xb0ts4m.png">
+<meta property="og:image" content="https://0x6f6f.github.io/2023/12/31/DETR-survey/assets/image-20231229175739-687pn31.png">
+<meta property="og:image" content="https://0x6f6f.github.io/2023/12/31/DETR-survey/assets/image-20231230112900-goeowex.png">
+<meta property="og:image" content="https://0x6f6f.github.io/2023/12/31/DETR-survey/assets/image-20231229173322-txjbw36.png">
+<meta property="og:image" content="https://0x6f6f.github.io/2023/12/31/DETR-survey/assets/image-20231229174219-gd7ub64.png">
+<meta property="og:image" content="https://0x6f6f.github.io/2023/12/31/DETR-survey/assets/image-20231229174436-nlazb02.png">
+<meta property="article:published_time" content="2023-12-30T16:15:11.000Z">
+<meta property="article:modified_time" content="2023-12-30T16:33:16.714Z">
+<meta property="article:author" content="28527">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://0x6f6f.github.io/2023/12/31/DETR-survey/image-20231226164055-s6sqtfv.png">
+
+<link rel="canonical" href="https://0x6f6f.github.io/2023/12/31/DETR-survey/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>DETR-survey | 0x6f6f的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">0x6f6f的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">5</span></a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://0x6f6f.github.io/2023/12/31/DETR-survey/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="28527">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="0x6f6f的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          DETR-survey
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-12-31 00:15:11 / Modified: 00:33:16" itemprop="dateCreated datePublished" datetime="2023-12-31T00:15:11+08:00">2023-12-31</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1
+id="accuracy-efficiency-and-expansion-surveying-the-advancements-in-detr-during-2021-2023">Accuracy,
+Efficiency, and Expansion: Surveying the Advancements in DETR during
+2021-2023</h1>
+<h1 id="abstract">Abstract</h1>
+<p><strong>DEtection TRansformer (DETR)</strong> is a framework for
+object detection that views it as a direct set prediction problem,
+removing the need for hand-designed components and utilizing a
+transformer encoder-Decoder architecture to improve the accuracy and
+efficiency of object detection. Within two years, Detection Transformer
+(DETR) has undergone a remarkable transformation. This survey dissects
+key advancements, analyzes its current state, and ponders its future,
+revealing how DETR redefines object detection.</p>
+<p>Key Words: Object Detection, Transformer, Detection Transformer</p>
+<h1 id="introduction">Introduction</h1>
+<p><strong>Object Detection</strong> refers to the task of automatically
+identifying and localizing objects within an image or video. It involves
+using computer vision techniques, such as deep learning models, to
+analyze and classify regions of an image that contain objects of
+interest. As a fundamental building block of computer vision, object
+detection has undergone a remarkable transformation in recent years.
+Early efforts relied on meticulously crafted features and laborious
+two-stage pipelines, struggling to achieve both accuracy and efficiency.
+However, the emergence of <strong>DETR (Detection Transformer)</strong>
+in 2020 marks a pivotal moment, introducing a novel paradigm that
+transcends limitations and unveils exciting possibilities for the future
+of object detection.</p>
+<img src="/2023/12/31/DETR-survey/image-20231226164055-s6sqtfv.png" class="" title="Overall-Structure-of-DETR">
+<p>DETR views object detection as a set prediction problem and
+introduces a remarkably concise pipeline for object detection. It
+involves using a <strong>Convolutional Neural Network (CNN)</strong> to
+extract foundational features, which are then input into a Transformer
+for relationship modeling. The resulting output is matched with ground
+truth on the image using a bipartite graph matching algorithm. The
+detailed methodology of DETR is illustrated in the above diagram, and
+its key design inceptions include:</p>
+<ol type="1">
+<li><p><strong>Modeling object detection as a set prediction
+problem:</strong></p>
+<p>DETR conceptualizes object detection as a set prediction problem.
+Instead of treating each object individually, DETR aims to predict the
+entire set of objects collectively. This global perspective is a
+departure from the conventional paradigm.</p></li>
+<li><p><strong>Bipartite Matching for Label Assignment:</strong></p>
+<p>To accomplish label assignment, DETR employs a bipartite matching
+strategy. This involves using the Hungarian algorithm, a combinatorial
+optimization algorithm, to determine the optimal matching between the
+predicted objects and the ground truth. This approach ensures effective
+and accurate label assignment.</p></li>
+<li><p><strong>Transformer-based Encoder-Decoder Structure:</strong></p>
+<p>DETR leverages the Transformer architecture with an encoder-Decoder
+structure. This choice transforms object detection into an end-to-end
+problem, eliminating the need for post-processing steps like Non-Maximum
+Suppression (NMS). The Transformer's attention mechanism enables global
+context understanding, contributing to improved detection
+accuracy.</p></li>
+<li><p><strong>Avoidance of handcrafted anchor priors:</strong></p>
+<p>Unlike traditional methods that rely on manually defined anchor
+priors, DETR avoids such handcrafted position prior information. This is
+achieved through its set-based approach, making the model more flexible
+and less dependent on predefined anchor boxes.</p></li>
+</ol>
+<span id="more"></span>
+<p>Given these observations, it's evident that DETR introduces a fresh
+paradigm to the field of object detection by framing it as a set
+prediction problem. However, DETR itself has certain limitations, such
+as:</p>
+<ul>
+<li><strong>Extended Training Time:</strong> DETR generally requires a
+longer training time to converge, for example, it may need 300-500
+epochs on COCO to achieve satisfactory results.</li>
+<li><strong>Performance Variation with Object Size:</strong> In
+comparison to detectors like Faster RCNN, DETR tends to perform better
+on larger objects but exhibits relatively lower performance on smaller
+objects. There is ample room for improvement in terms of training
+efficiency and the ability to detect small targets.</li>
+</ul>
+<p>Despite these limitations, DETR's unique approach has opened up new
+possibilities in object detection, and ongoing research is aimed at
+addressing these challenges for further advancements. The Overall
+Structure of Our Survey is shown on Figure 2.</p>
+<p><img src="assets/kmind-20231229203315-83scjez.png"
+title="Illustration of the deformable attention module" /></p>
+<p>Our survey delves into the key advancements made in DETR from 2021 to
+2023, highlighting how researchers have tackled its limitations and
+pushed the boundaries of its performance. Our contributions can be
+summarized below:</p>
+<ul>
+<li><strong>Systematic Exploration of DETR Improvement
+Directions:</strong> This paper provides a comprehensive and systematic
+review of the various improvement directions for DETRs. It delves into
+the nuanced aspects of enhancing the performance and capabilities of
+DETR in the context of object detection.</li>
+<li><strong>Efficiency Evaluation and Comparative Analysis of DETR
+Improvement Directions:</strong> Through empirical assessments and
+comparative analyses, we aim to quantify the impact of these
+improvements on the overall efficiency and effectiveness of the DETR
+model.</li>
+<li><strong>Exploring the Integration of DETR with Other Machine
+Learning Methods:</strong> In addition to internal enhancements, this
+paper explores the synergy between DETR and other machine learning
+methods. By investigating potential collaborative approaches, we aim to
+identify novel strategies that leverage the strengths of DETR in
+conjunction with complementary techniques from the broader machine
+learning landscape.</li>
+</ul>
+<h1 id="enhancing-accuracy-and-efficiency">Enhancing Accuracy and
+Efficiency</h1>
+<p>Despite DETR's impressive object detection capabilities, its
+performance on small objects restrict its wider application. Thankfully,
+recent years have witnessed remarkable progress in addressing these
+limitations. This section delves deeper into these advancements,
+exploring how researchers are enhancing DETR's accuracy and robustness
+to unlock its full potential in diverse object detection tasks.</p>
+<h2 id="deformable-detr">Deformable DETR</h2>
+<p>Deformable DETR points out the reasons behind the slow convergence
+speed and poor detection performance on small objects in DETR, which are
+attributed to the flaws in the processing logic of image features by the
+Transformer. Specifically, during initialization, the Transformer
+initializes weights with minimal differences for all queries within its
+self-attention module. This causes the network to require extensive
+training time to converge the weight matrix to appropriate values.
+Additionally, the time complexity of the attention module used in the
+Transformer grows quadratically with the increase in the number of
+pixels in the image. This high cost limits the input feature map size
+used in the DETR model, consequently restricting the model's detection
+performance on small targets.</p>
+<p>o address these issues, Deformable DETR proposes the Multi-scale
+Deformable Attention (MSDA) to replace the self-attention in the Encoder
+and the cross-attention in the Decoder. Based on this design, DETR
+incorporates a multi-scale feature detection process using MSDA, which
+not only provides DETR with multi-scale advantages but also reduces
+computational requirements. The computation flow of MSDA is illustrated
+in the following diagram.</p>
+<p><img src="assets/image-20231227205901-986pvkx.png"
+title="Illustration of the deformable attention module" /></p>
+<p>Specifically, the design of the MSDA architecture allows each feature
+pixel to interact and compute with only a subset of other pixels
+obtained through sampling during the attention calculation process. This
+significantly accelerates model convergence while reducing computational
+complexity and required spatial resources.</p>
+<p>In the classical Transformer, the multi-head attention mechanism can
+be represented by the following formula:</p>
+<p><span class="math display">\[
+MultiHeadAtten(z_q,x)=\sum_{m=1}^MW_m[\sum_{k\in\Omega_k}A_{mqk}\cdot
+W_m&#39;x_k]
+\]</span></p>
+<p>Where <span class="math inline">\(z_q\)</span> represents the query,
+which is obtained by linear transformation of <span
+class="math inline">\(x\)</span>. <span class="math inline">\(q\)</span>
+and <span class="math inline">\(k\)</span> are the corresponding indices
+for query and key, respectively. <span
+class="math inline">\(\Omega_k\)</span> denotes the set of all keys.
+<span class="math inline">\(m\)</span> represents the index of the
+attention head, and <span class="math inline">\(W_m\)</span> is the
+result of applying a linear transformation on the values after the
+attention is applied. <span class="math inline">\(W_m&#39;\)</span> is
+used to transform <span class="math inline">\(x_k\)</span> into the
+value. <span class="math inline">\(A_{mqk}\)</span> represents the
+normalized attention weight.</p>
+<p>From this, we can see that in the computation of the multi-head
+attention in the Transformer, each query interacts with all positions of
+the keys to calculate attention weights, and these weights are then
+applied to all the corresponding values.</p>
+<p>The Deformable attention mechanism proposed in Deformable DETR can be
+represented by the following formula:</p>
+<p><span class="math display">\[
+DeformAttn(z_q,p_q,x)=\sum_{m=1}^MW_m[\sum_{k=1}^{K}A_{mqk}\cdot
+W_m&#39;x(p_q+\Delta p_{mqk})]
+\]</span></p>
+<p>As we can see, the deformable attention mechanism introduces two
+variables, <span class="math inline">\(p_q\)</span> representing
+reference points and <span class="math inline">\(\Delta p_{mqk}\)</span>
+representing reference position offsets, during the computation process.
+It is important to note that <span class="math inline">\(\Delta
+p_{mqk}\)</span>, similar to attention weights, is indirectly calculated
+through an intermediate fully connected layer. Each query computes
+interpolated values based on the sampled points and offsets, enabling it
+to sample K positions within each attention head and interact only with
+the pixels at those positions. This approach addresses the slow
+convergence issue caused by the global averaging of weights in the
+original multi-head attention mechanism.</p>
+<p>Deformable DETR also addresses the limitation of the original
+attention mechanism, which is its inability to handle multi-scale
+feature map inputs. It further extends the deformable attention
+mechanism to a multi-scale deformable attention mechanism.</p>
+<p><span class="math display">\[
+MSDeformAttn(z_q,\hat
+p_q,\{x^l\}^L_{l=1})=\sum_{m=1}^MW_m[\sum_{l=1}^L\sum_{k=1}^{K}A_{mlqk}\cdot
+W_m&#39;x(\phi_l(\hat p_q)+\Delta p_{mlqk})]
+\]</span></p>
+<p>The multi-scale deformable attention mechanism introduces a variable
+<span class="math inline">\(l\)</span> representing the number of
+feature map scales, allowing simultaneous attention computation on
+multiple scales of feature maps. <span
+class="math inline">\(\phi_l\)</span> represents a mapping process that
+maps normalized coordinates to various feature layers. This extends the
+position encoding from a single feature map to multiple feature maps
+(implemented by adding a learnable position encoding layer representing
+the feature map scale number on top of the sine position encoding).
+Additionally, during the computation of the multi-scale deformable
+attention mechanism, the reference point <span
+class="math inline">\(p_q\)</span> is normalized to obtain <span
+class="math inline">\(\hat p_q\)</span>, scaling its range to [0, 1]. As
+a result, each query samples K points on each feature layer, computes
+attention outputs separately for each feature scale, and then aggregates
+them together. Finally, the aggregated attention is multiplied with the
+value matrix (denoted as <span class="math inline">\(W_m\)</span>)
+corresponding to that attention head.</p>
+<p>In summary, the work of Deformable DETR keenly recognizes the reasons
+behind the slow convergence and poor detection performance on small
+objects in DETR, which are attributed to the attention computation
+module of the Transformer. The Transformer models dense relationships
+globally, requiring the model to spend a long time learning to focus on
+meaningful sparse positions. This, in turn, leads to high computational
+complexity and consumes significant spatial resources. Recognizing that
+learning sparse spatial positions is a strength of Deformable
+Convolutional Networks (DCN), but they lack the ability to model
+relationships, the authors combine DCN with the Transformer and make
+significant improvements tailored to the characteristics of object
+detection tasks. This combination greatly enhances the convergence speed
+and detection capability of DETR, particularly for small objects.</p>
+<h2 id="dab-detr">DAB-DETR</h2>
+<p>Through a more insightful understanding of the details, DAB-DETR
+addresses the issue in the original DETR where the learnable query used
+in the Cross Attention module of the Decoder lacks positional prior
+information during initialization. DAB-DETR models the query in the
+Decoder using four-dimensional anchor boxes. This approach not only
+enhances the interpretability of the DETR query but also accelerates the
+model's convergence speed.</p>
+<p><img src="assets/image-20231228152337-lnayt1f.png"
+title="Comparation of DETR, Conditional DETR, DAB-DETR" /></p>
+<p>In DETR, Conditional DETR, and DAB-DETR, the structures related to
+Cross-Attention are compared as shown in Figure 3. It can be observed
+that DAB-DETR directly replaces the Learnable Queries used in the
+original DETR with anchor boxes, providing further clarity on their
+significance during the training process. In DAB-DETR, when using
+Learnable Anchors to guide the Cross-Attention module in computing the
+feature map, the positional query representing the top-left corner of
+the bounding box <span class="math inline">\((x, y)\)</span> is encoded
+using sine and cosine functions and multiplied with the Decoder
+Embeddings vector initialized as a zero matrix to form the Q vector for
+Cross-Attention computation. During the Cross-Attention computation, the
+Learnable Anchors representing the height and width of the bounding box
+<span class="math inline">\((w, h)\)</span> participate in modulating
+the attention map output. After each layer of Cross-Attention
+computation, the module outputs the offset of the anchor box
+(corresponding to an additional globally shared MLP structure) to serve
+as the basis for progressively refining the Learnable Anchors.</p>
+<p>Starting from the formulas, we have the computation formulas for the
+original Cross-Attention and position-related attention:</p>
+<p><span class="math display">\[
+Attn((x,y),(x_{ref},y_{ref}))=\frac{PE(x)\cdot PE(x_{ref})+PE(y)\cdot
+PE(y_{ref})}{\sqrt{D}}
+\]</span></p>
+<p>In the formula, <span class="math inline">\((x, y)\)</span> and <span
+class="math inline">\((x_{ref}, y_{ref})\)</span> correspond to the
+query and key in the Decoder, respectively. The key is derived from the
+Positional Embeddings of the Encoder. The function PE represents the
+process of positional encoding, which is typically implemented using
+sine and cosine functions in the original implementation of DETR.</p>
+<p>On the other hand, DAB-DETR introduces adjustable parameters based on
+Learnable Anchors for the height and width of the key in the adaptive
+Cross-Attention:</p>
+<p><span class="math display">\[
+ModulateAttn((x,y),(x_{ref},y_{ref}))=\frac{PE(x)\cdot
+PE(x_{ref})\frac{w_{q,ref}}{w_q}+PE(y)\cdot
+PE(y_{ref})\frac{h_{q,ref}}{h_q}}{\sqrt{D}}
+\]</span></p>
+<p>In the formula, <span class="math inline">\(w_q\)</span> and <span
+class="math inline">\(w_{q,ref}\)</span> represent the width of the
+Learnable Anchors and the scale adjustment factor calculated by the
+layer itself, respectively. The same representation method applies to
+the height as well. The scale adjustment factor is computed using the
+following formula:</p>
+<p><span class="math display">\[
+h_{q,ref}=w_{q,ref}=MLP^{(csq)}(C_q)
+\]</span></p>
+<p>In the formula, <span class="math inline">\(MLP^{(csq)}\)</span>
+consists of a linear layer and a ReLU activation layer, and <span
+class="math inline">\(C_q\)</span> represents the content query received
+by the Cross-Attention module.</p>
+<p>To sum up, DAB-DETR modifies the Cross-Attention in DETR by
+reinterpreting the Learnable Queries using Learnable Anchors to design
+appropriate positional priors. It also introduces a more efficient
+layer-wise updating mechanism for the Learnable Queries. These
+modifications not only improve the accuracy but also further accelerate
+the convergence speed of DETR.</p>
+<h2 id="dn-detr">DN-DETR</h2>
+<p>The result of the Hungarian matching algorithm used in DETR is highly
+sensitive to the values of the cost matrix. Even slight differences in
+the computed cost matrix can lead to significantly different matching
+results. Therefore, in the early stages of training, the optimization
+objective of the model becomes ambiguous and unstable, resulting in
+ambiguity and making the optimization process more challenging. As a
+result, the model requires a longer convergence time.</p>
+<p>DN-DETR addresses this issue by combining the Hungarian matching task
+with a denoising task during the training process to accelerate the
+convergence of matching queries to ground truth labels. However, during
+the inference process, the denoising inference task is not performed,
+ensuring that this training strategy does not impact the model's
+inference speed. An overview of the training strategy proposed by
+DN-DETR is shown in the following diagram.</p>
+<p><img src="assets/image-20231228184906-bie8yht.png"
+title="Overview of DN-DETR Training Method" /></p>
+<p>From the diagram, we can observe that DN-DETR introduces parallel
+network structures in the Decoder part of DETR, corresponding to the
+denoising training. DN-DETR allows for the inclusion of multiple
+denoising training groups within the network. These groups receive
+inputs obtained by adding noise to the ground truth (referred to as
+<strong>gt</strong>) boxes and their training objective is to
+reconstruct the original gt boxes. The noise injection process in
+DN-DETR is divided into two parts: position and content. The position
+part involves adding random perturbations to the <span
+class="math inline">\((x, y, w, h)\)</span> coordinates of the gt boxes,
+while the content part corresponds to randomly replacing values in the
+embedding vector of the gt box labels. In the following text, we will
+provide further explanation of the noise injection process in
+DN-DETR.</p>
+<h3 id="label-noise">Label Noise</h3>
+<p>In DN-DETR, the noise injection process for labels involves mapping
+the original labels to an intermediate embedding space and then applying
+random drift to the embedding vector corresponding to the gt labels in
+that space. The implementation is similar to the use of word embeddings
+in NLP. It involves looking up the corresponding vector in a label
+embedding matrix based on an integer value. Therefore, it is necessary
+to include an embedding matrix in the model, where both the original
+label embedding vectors and the noise-injected embedding vectors are
+stored. The noise-injected embedding vectors still correspond to the
+original integer labels.</p>
+<p>Considering that label noise may impact the original Hungarian
+matching task, DN-DETR appends an indicator vector after the Class Label
+Embedding to indicate whether the current task is denoising or Hungarian
+matching. Additionally, in the denoising task, where the content of the
+query corresponds to the noise-injected labels, the labels associated
+with the query in the Decoder are initialized as the embedding vector of
+the None-object class (representing non-detection targets) in the label
+embedding matrix. This ensures that the initial state of the query is
+within the label space. These modifications are based on the Decoder of
+DAB-DETR and can be represented by the following diagram:</p>
+<p>![](assets/image-20231228195735-35nvstl.png " Comparison of the
+cross-attention part DAB-DETR and DN-DETR")</p>
+<h3 id="bounding-box-noise">Bounding Box Noise</h3>
+<p>This noise injection process corresponds to perturbing the position
+components of the query, namely the Learnable Anchors: <span
+class="math inline">\((x, y, w, h)\)</span>. Specifically, the noise
+injection can be divided into center point displacement and scale
+scaling. Center point displacement involves sampling a perturbation
+parameter <span class="math inline">\(\lambda_1\)</span> from a uniform
+distribution, and then recalculating the center point <span
+class="math inline">\((x_{cnew}, y_{cnew}) = ((1 \pm \lambda_1)x_c, (1
+\pm \lambda_1)y_c)\)</span>, where <span class="math inline">\(x_c = x +
+\frac{w}{2}\)</span> and <span class="math inline">\(y_c = y +
+\frac{h}{2}\)</span>. Scale scaling involves randomly sampling another
+perturbation parameter <span class="math inline">\(\lambda_2\)</span>
+from a uniform distribution, resulting in scaled width and height of
+<span class="math inline">\((1 \pm \lambda_2)w_c, (1 \pm
+\lambda_2)h_c\)</span>. The impact of different noise scales on training
+accuracy is shown in the following figure:</p>
+<p><img src="assets/image-20231229135747-nf4s2ce.png"
+title="DN-DETR in different noise scales" /></p>
+<h3 id="denoising-group">Denoising Group</h3>
+<p>Similar to the multiple detection heads in two-stage object
+detection, DN-DETR also introduces multiple denoising heads responsible
+for reconstructing the ground truth (gt) in the structure of the
+denoising task. Each gt is predicted by a noise-injected query in each
+group, resulting in multiple queries corresponding to a single gt. The
+denoising groups aim to guide the Hungarian matching task group to
+better learn the correspondence between queries and gts during training
+but are not invoked during inference. Therefore, during training,
+DN-DETR establishes a one-to-many relationship from gt to query, while
+during inference, it only involves a one-to-one relationship.</p>
+<h3 id="attention-mask-matrix">Attention Mask Matrix</h3>
+<p>Since the noise-injected queries are generated by drifting the gts in
+the original space, they can be considered as augmented samples of the
+training data, carrying a significant amount of the original
+information. Therefore, it is necessary to design the mask matrix
+appropriately to satisfy the following three conditions:</p>
+<ul>
+<li>Queries in the Hungarian matching task should not have visibility of
+the queries in the denoising task.</li>
+<li>Queries within different groups in the denoising task should not
+have visibility of each other.</li>
+<li>Visibility is allowed in all other cases.</li>
+</ul>
+<h3 id="matching-performance-metric">Matching Performance Metric</h3>
+<p>DN-DETR introduces an IS (Index Stability) metric to measure the
+stability of the Hungarian matching task in the DETR model. The formula
+for IS is as follows:</p>
+<p><span class="math display">\[
+IS^i=\sum_{j=0}^{N}{\mathbb{1}(V_n^i\neq V_n^{i-1})}
+\]</span></p>
+<p>In the above formula, let <span
+class="math inline">\(O^i={O_0^i,O_1^i,O_2^i,\ldots,O_{N-1}^i}\)</span>
+represent the predicted results decoded by the model at the <span
+class="math inline">\(i\)</span>-th epoch, where <span
+class="math inline">\(N\)</span> represents the number of predicted
+objects. Let <span
+class="math inline">\(T={T_0,T_1,T_2,\ldots,T_{M-1}}\)</span> represent
+the objects in the image, where <span class="math inline">\(M\)</span>
+represents the number of objects in the image. We can use <span
+class="math inline">\(V^i={V_0^i,V_1^i,...,,V_{N-1}^i}\)</span> to
+represent the matching index vector, i.e., <span
+class="math inline">\(\left.V_n^i=\left\{\begin{array}{ll}m,&amp;\text{if
+}O_n^i\text{ matches }T_m\\-1,&amp;\text{if }O_n^i\text{ matches
+nothing}\end{array}\right.\right.\)</span>。The IS metric also involves
+an indicator function <span class="math inline">\(\mathbb{1}(V_n^i\neq
+V_n^{i-1})\)</span>, which is 1 when the matching results of the
+previous round are inconsistent with the current round, and 0 otherwise.
+Based on this metric, DN-DETR compares the Hungarian matching stability
+of DETR and DAB-DETR, and the results show that DN-DETR, with the
+guidance of the denoising task, achieves higher stability.</p>
+<p><img src="assets/image-20231229161812-o3w6slw.png"
+title="The IS of DAB-DETR and DN-DETR during training." /></p>
+<h1 id="expanding-capabilities">Expanding Capabilities</h1>
+<p>While DETR has emerged as a successful method for object detection,
+its potential extends beyond this initial application. This section
+delves into exciting new possibilities by exploring how DETR can be
+combined with other machine learning techniques, such as semi-supervised
+learning. By leveraging unlabeled data and collaborative training
+strategies, we can unlock enhanced accuracy, efficiency, and robustness,
+enabling DETR to tackle a wider range of tasks and contribute even more
+to the field of computer vision.</p>
+<h2 id="sam-detr">SAM-DETR</h2>
+<p>The core idea of SAM-DETR is to leverage the excellent performance of
+Siamese Networks in various matching tasks, allowing the object query in
+Cross-Attention to more easily focus on specific regions. Some of the
+structures involved in SAM-DETR are illustrated in the following
+diagram：</p>
+<p><img src="assets/image-20231229195450-64y82kf.png"
+title="The proposed Semantic-Aligned-Matching DETR (SAM-DETR)" /></p>
+<p>The upper diagram (a) illustrates the structure of one decoder in
+SAM-DETR. In this model, a Semantics Aligner module is inserted before
+each layer of Cross-Attention in the decoder. This module resamples,
+with reference to the input image features, each object query input into
+the Cross-Attention, ensuring alignment between the two. On the other
+hand, diagram (b) depicts the specific workflow of Semantics Aligner for
+an individual object query.。</p>
+<h3 id="achieving-semantic-alignment-through-resampling">Achieving
+Semantic Alignment through Resampling</h3>
+<p>For each object query, the Semantics Aligner models a reference box
+to constrain the resampling range, known as the Reference Boxes in the
+diagram. For each reference box, the Semantics Aligner employs <a
+target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41917697/article/details/122830015">RoIAlign</a>
+to sample its image features, obtaining the region of interest. It then
+uses these region features to predict the coordinates of the most
+discriminative salient points. Subsequently, the Semantics Aligner
+extracts this information as an embedded vector for the object query
+with aligned semantics. After weighting adjustment based on the previous
+object query embedding vector, the new object query is output.</p>
+<h3 id="resampling-using-salient-point-features">Resampling Using
+Salient Point Features</h3>
+<p>Salient points of an object (including boundary points, endpoints,
+strong semantic points, etc.) are crucial for its recognition and
+localization. Semantics Aligner samples features from these salient
+points, and after weighted adjustment, they serve as the output of
+Semantics Aligner. The calculation of salient points involves
+convolution and MLP operations on the region of interest, predicting a
+total of 8 points of interest. These computed points of interest are
+concatenated together after bilinear interpolation for calculating the
+new object query embedding. Additionally, they are used to compute the
+positional encoding for the current stage.</p>
+<h3
+id="re-weighting-currently-computed-features-using-previous-information">Re-weighting
+Currently Computed Features Using Previous Information</h3>
+<p>The previous object query still contains information useful for
+Cross-Attention. To effectively leverage this information, the author
+generates re-weighting parameters from the previous object query, which
+are then applied to re-weight the features of the new object query. This
+ensures that the model can effectively utilize prior information while
+maintaining semantic alignment between the object query and image
+features.</p>
+<h2 id="grounding-dino">Grounding DINO</h2>
+<p>Grounding DINO combines contrastive learning with DINO, a DETR object
+detector, empowering DETR-like models to address open-world object
+detection problems. Simultaneously, it further enhances both the
+inference efficiency and detection accuracy. The model structure of
+Grounding DINO is illustrated in the following diagram:</p>
+<p><img src="assets/image-20231229170436-xb0ts4m.png"
+title="The framework of Grounding DINO" /></p>
+<p>From the above diagram, we can observe that Grounding DINO introduces
+a Text Backbone alongside the Image Backbone to handle text sequence
+inputs, and the fused features of both are utilized for object detection
+tasks. Additionally, Grounding DINO employs a feature enhancer to
+perform feature cross-fusion between image and text features. It uses a
+language-guide query selection module to initialize region queries
+guided by text and employs a cross-modality Decoder for bbox prediction
+tasks.</p>
+<p>Grounding DINO investigates the handling structure of input images
+for object detection tasks in both open-set and closed-set scenarios. To
+enable models designed for traditional closed-set tasks to handle
+detection tasks in open-set scenarios, Grounding DINO performs feature
+enhancement at three key locations: Neck, Query initialization, and the
+detection head. The specific methods of feature enhancement are detailed
+in the diagram below.</p>
+<p><img src="assets/image-20231229175739-687pn31.png"
+title="Approaches to extending closed-set detectors to open-set scenarios" /></p>
+<p>The three aspects of feature enhancement mentioned above are the
+three directions in which Grounding DINO seeks improvement. In the
+following, we will introduce the new technologies introduced by
+Grounding DINO from these modules:</p>
+<h3 id="feature-extraction-and-fusion-enhancement">Feature Extraction
+and Fusion Enhancement</h3>
+<p>In terms of feature extraction, the author employs Swin Transformer
+as the image backbone and BERT as the text backbone. The extraction of
+image features is similar to previous DETR variants, utilizing a
+multi-scale approach.</p>
+<p>For text feature extraction, Grounding DINO integrates both
+sentence-level and word-level representations. Recognizing that sequence
+dependencies for individual labels are unnecessary in object detection,
+it proposes modeling text sequences in a sub-sentence level manner. The
+comparison of these modeling approaches is illustrated in the diagram
+below.</p>
+<p><img src="assets/image-20231230112900-goeowex.png"
+title="Comparisons of text representations" /></p>
+<p>In the sentence-level approach, the entire sentence is encoded into a
+single feature, retaining only the phrases relevant to the ground truth
+(gt) and disregarding finer-grained information within the sentence,
+such as color or position. On the other hand, the word-level approach
+can simultaneously encode names of multiple categories but introduces
+many unnecessary dependencies between categories, leading to
+interactions between unrelated classes. In the sub-sentence level
+approach proposed by Grounding DINO, the author introduces an attention
+mask to block connections between category names, avoiding dependencies
+between unrelated classes while capturing features of multiple labels at
+the word level.</p>
+<p><img src="assets/image-20231229173322-txjbw36.png"
+title="Feature Enhancer Layer with Text Features" /></p>
+<p>For feature fusion enhancement, Grounding DINO draws inspiration from
+GLIP's work and designs a cross-enhancement module as shown in the
+diagram above. It utilizes cross-enhancement between text-to-image and
+image-to-text, followed by a Feedforward Neural Network (FFN) to
+generate updated text and image features.</p>
+<h3 id="query-selection-guided-by-natural-language">Query Selection
+Guided by Natural Language</h3>
+<p>Grounding DINO introduces a language-guide query selection module to
+filter image features based on the characteristics of the text sequence,
+selecting those with higher similarity to the text sequence as queries
+for the Decoder. The PyTorch code for this module is illustrated in the
+diagram below. Here, num_query is the number of queries used for the
+Decoder, set to 900; num_img_tokens and num_text_tokens are the token
+counts for image and text, respectively.</p>
+<p><img src="assets/image-20231229174219-gd7ub64.png"
+title="Language-guided query selection." /></p>
+<h3 id="cross-modality-decoder">Cross-Modality Decoder</h3>
+<p><img src="assets/image-20231229174436-nlazb02.png"
+title="Decoder Layer in Grounding DINO" /></p>
+<p>Grounding DINO utilizes a cross-modality decoder to combine text and
+image features. The most notable difference of this decoder compared to
+DINO is the addition of a cross-attention module corresponding to text,
+on top of the existing cross-attention for the image. Learnable Anchors,
+which originally corresponded only to image positions, now logically
+serve as cross-modality queries while retaining their original form. The
+updating process now involves the input text features as well.</p>
+<h1 id="overall-comparison">Overall Comparison</h1>
+<p>In this section, we present five variants of the DETR (DEtection
+TRansformers) model that are covered in the report, as well as the
+performance metrics of the original DETR on a unified dataset. Starting
+from the improvement directions of each model, we analyze the impact of
+the improvement strategies chosen by these models on their object
+detection performance. Specifically, we will analyze the object
+detection performance of these models in closed-set scenarios on the
+COCO dataset, comparing their detection accuracy, training time, and
+inference throughput. Such comparisons contribute to a clearer and more
+comprehensive understanding of the methods adopted by these models.</p>
+<h2 id="dataset">Dataset</h2>
+<p>We show the effectiveness of DETR-based models on the challenging
+MS-COCO 2017 [13] Detection task. MS-COCO is composed of 160K images
+with 80 categories. These images are divided into train2017 with 118K
+images, val2017 with 5K images, and test2017 with 41K images. In all our
+experiments, we train the models on train2017 and test on val2017.
+Following the common practice, we report the standard mean average
+precision (AP) result on the COCO validation dataset under different IoU
+thresholds and object scales.</p>
+<h2 id="comparasion">Comparasion</h2>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 34%" />
+<col style="width: 13%" />
+<col style="width: 6%" />
+<col style="width: 4%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 6%" />
+<col style="width: 3%" />
+<col style="width: 6%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Backbone</th>
+<th>Model</th>
+<th>epochs</th>
+<th>AP</th>
+<th>AP@50</th>
+<th>AP@75</th>
+<th>AP@S</th>
+<th>AP@M</th>
+<th>AP@L</th>
+<th>GFLOPS</th>
+<th>FPS</th>
+<th>Params</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">ResNet-50<br /></td>
+<td>DETR</td>
+<td>500</td>
+<td>42</td>
+<td>62.4</td>
+<td>44.2</td>
+<td>20.5</td>
+<td>45.8</td>
+<td>61.1</td>
+<td>86</td>
+<td>28</td>
+<td>41</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"></td>
+<td>DAB-DETR</td>
+<td>50</td>
+<td>42.2</td>
+<td>63.1</td>
+<td>44.7</td>
+<td>21.5</td>
+<td>45.7</td>
+<td>60.3</td>
+<td>94</td>
+<td>-</td>
+<td>44</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"></td>
+<td>DN-DETR</td>
+<td>50</td>
+<td>44.1</td>
+<td>64.4</td>
+<td>46.7</td>
+<td>22.9</td>
+<td>48</td>
+<td>63.4</td>
+<td>94</td>
+<td>-</td>
+<td>44</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"></td>
+<td>SAM-DETR</td>
+<td>50</td>
+<td>41.8</td>
+<td>63.2</td>
+<td>43.9</td>
+<td>22.1</td>
+<td>45.9</td>
+<td>60.9</td>
+<td>100</td>
+<td>-</td>
+<td>58</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"></td>
+<td>Grounding DINO</td>
+<td>12</td>
+<td>48.1</td>
+<td>65.8</td>
+<td>52.3</td>
+<td>30.4</td>
+<td>51.3</td>
+<td>63</td>
+<td>464</td>
+<td>8</td>
+<td>172</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">ResNet-50-DC5<br /></td>
+<td>DETR</td>
+<td>500</td>
+<td>43.3</td>
+<td>63.1</td>
+<td>45.9</td>
+<td>22.5</td>
+<td>47.3</td>
+<td>61.1</td>
+<td>187</td>
+<td>12</td>
+<td>41</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"></td>
+<td>Deformable DETR</td>
+<td>50</td>
+<td>46.2</td>
+<td>65.2</td>
+<td>50</td>
+<td>28.8</td>
+<td>49.2</td>
+<td>61.7</td>
+<td>173</td>
+<td>19</td>
+<td>40</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"></td>
+<td>DAB-DETR</td>
+<td>50</td>
+<td>44.5</td>
+<td>65.1</td>
+<td>47.7</td>
+<td>25.3</td>
+<td>48.2</td>
+<td>62.3</td>
+<td>202</td>
+<td>-</td>
+<td>44</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"></td>
+<td>DN-DETR</td>
+<td>50</td>
+<td>46.3</td>
+<td>66.4</td>
+<td>49.7</td>
+<td>26.7</td>
+<td>50</td>
+<td>64.3</td>
+<td>202</td>
+<td>-</td>
+<td>44</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"></td>
+<td>SAM-DETR</td>
+<td>50</td>
+<td>45</td>
+<td>65.4</td>
+<td>47.9</td>
+<td>26.2</td>
+<td>49</td>
+<td>63.3</td>
+<td>210</td>
+<td>-</td>
+<td>58</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">ResNet-101<br /></td>
+<td>DETR</td>
+<td>500</td>
+<td>43.5</td>
+<td>63.8</td>
+<td>46.4</td>
+<td>21.9</td>
+<td>48</td>
+<td>61.8</td>
+<td>152</td>
+<td>20</td>
+<td>60</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"></td>
+<td>DAB-DETR</td>
+<td>50</td>
+<td>43.5</td>
+<td>63.9</td>
+<td>46.6</td>
+<td>23.6</td>
+<td>47.3</td>
+<td>61.5</td>
+<td>174</td>
+<td>-</td>
+<td>63</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"></td>
+<td>DN-DETR</td>
+<td>50</td>
+<td>45.2</td>
+<td>65.5</td>
+<td>48.3</td>
+<td>24.1</td>
+<td>49.1</td>
+<td>65.1</td>
+<td>174</td>
+<td>-</td>
+<td>63</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">ResNet-101-DC5<br /></td>
+<td>DETR</td>
+<td>500</td>
+<td>44.9</td>
+<td>64.7</td>
+<td>47.7</td>
+<td>23.7</td>
+<td>49.5</td>
+<td>62.3</td>
+<td>253</td>
+<td>10</td>
+<td>60</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"></td>
+<td>DAB-DETR</td>
+<td>50</td>
+<td>45.8</td>
+<td>65.9</td>
+<td>49.3</td>
+<td>27</td>
+<td>49.8</td>
+<td>63.8</td>
+<td>282</td>
+<td>-</td>
+<td>63</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"></td>
+<td>DN-DETR</td>
+<td>50</td>
+<td>47.3</td>
+<td>67.5</td>
+<td>50.8</td>
+<td>28.6</td>
+<td>51.5</td>
+<td>65</td>
+<td>282</td>
+<td>-</td>
+<td>63</td>
+</tr>
+</tbody>
+</table>
+<p>The referred DETR models, as enumerated in the table above, showcase
+variations and enhancements in their design and performance. These
+models' performance is evaluated based on several metrics such as
+Average Precision (AP) at different Intersection over Union (IoU)
+thresholds (AP@50, AP@75), and category-specific AP for small (AP@S),
+medium (AP@M), large (AP@L) objects. Apart from these metrics, other
+metrics such are GFLOPS (GigaFLoating Point Operations Per Second) , FPS
+(Frames Per Second), and model parameters. They elucidates the
+computational efficiency and model complexity associated with each
+configuration.</p>
+<p>From the table above we can see ResNet-50 DETR emerges as a
+commendable baseline, achieving a balanced performance with an AP of 42,
+yet revealing a minor limitation in detecting smaller objects (AP@S of
+20.5). DAB-DETR, introducing architectural modifications, maintains
+performance on par with ResNet-50 DETR, emphasizing the need for a
+thorough examination of the impact of these modifications. DN-DETR
+stands out by excelling in detecting larger objects, as reflected in
+AP@75 (46.7) and AP@L (63.4), underscoring its robustness. SAM-DETR
+showcases competitive overall performance but demands a higher
+computational cost (GFLOPS of 100), warranting careful consideration for
+real-time applications. Grounding DINO impressively achieves high AP
+scores, especially at AP@50 (65.8) and AP@75 (52.3), within a limited
+training duration, opening avenues for further exploration with extended
+training periods. ResNet-50-DC5 Deformable DETR introduces deformable
+attention mechanisms, enhancing AP scores for medium-sized objects
+(AP@M) while introducing a moderate increase in computational demands
+(GFLOPS of 187). These findings collectively provide a nuanced
+understanding of the strengths and potential areas for improvement
+across diverse DETR architectures, offering valuable insights for future
+research and development in object detection methodologies.</p>
+<h1 id="summary">Summary</h1>
+<p>In a mere two-year span, DETR has undergone a remarkable
+transformation, signaling a significant departure from conventional
+approaches to object detection. This extensive survey meticulously
+examines the pivotal advancements within the DETR framework, delving
+into the evolution of its various variants. By tracing the trajectory of
+DETR's development, this survey provides a detailed analysis of its
+current state, offering valuable insights into the framework's
+innovative contributions. Specifically, the survey explores the future
+landscape of DETR models, showcasing notable examples like the recently
+developed Grounding DINO, which demonstrates exceptional potential and
+performance in traditional detection tasks. Drawing on a comprehensive
+comparison of these models' performance on the COCO dataset, the survey
+facilitates a deeper understanding of their intricacies and
+effectiveness. The aim of this survey is to serve as a valuable resource
+for future researchers in the dynamic field of DETR model research,
+providing a roadmap for further exploration and advancement in this
+transformative domain. ‍</p>
+<h1 id="reference">Reference</h1>
+<p>Related papers are listed below:</p>
+<p>[1] Carion, Nicolas, Francisco Massa, Gabriel Synnaeve, Nicolas
+Usunier, Alexander Kirillov, and Sergey Zagoruyko. "End-to-End Object
+Detection with Transformers." arXiv, May 28, 2020.</p>
+<p>[2] Li, Feng, Hao Zhang, Shilong Liu, Jian Guo, Lionel M. Ni, and Lei
+Zhang. "DN-DETR: Accelerate DETR Training by Introducing Query
+DeNoising." arXiv, December 8, 2022.</p>
+<p>[3] Liu, Shilong, Feng Li, Hao Zhang, Xiao Yang, Xianbiao Qi, Hang
+Su, Jun Zhu, and Lei Zhang. "DAB-DETR: Dynamic Anchor Boxes are Better
+Queries for DETR." arXiv, March 30, 2022.</p>
+<p>[4] Liu, Shilong, Zhaoyang Zeng, Tianhe Ren, Feng Li, Hao Zhang, Jie
+Yang, Chunyuan Li, et al. "Grounding DINO: Marrying DINO with Grounded
+Pre-Training for Open-Set Object Detection." arXiv, March 20, 2023.</p>
+<p>[5] Zhang, Gongjie, Zhipeng Luo, Yingchen Yu, Kaiwen Cui, and Shijian
+Lu. "Accelerating DETR Convergence via Semantic-Aligned Matching."
+arXiv, March 14, 2022.</p>
+<p>[6] Zhu, Xizhou, Weijie Su, Lewei Lu, Bin Li, Xiaogang Wang, and
+Jifeng Dai. "Deformable DETR: Deformable Transformers for End-to-End
+Object Detection." arXiv, March 17, 2021.</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/10/27/%E8%87%AA%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/" rel="prev" title="自注意力机制">
+      <i class="fa fa-chevron-left"></i> 自注意力机制
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#accuracy-efficiency-and-expansion-surveying-the-advancements-in-detr-during-2021-2023"><span class="nav-number">1.</span> <span class="nav-text">Accuracy,
+Efficiency, and Expansion: Surveying the Advancements in DETR during
+2021-2023</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#abstract"><span class="nav-number">2.</span> <span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#introduction"><span class="nav-number">3.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#enhancing-accuracy-and-efficiency"><span class="nav-number">4.</span> <span class="nav-text">Enhancing Accuracy and
+Efficiency</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#deformable-detr"><span class="nav-number">4.1.</span> <span class="nav-text">Deformable DETR</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dab-detr"><span class="nav-number">4.2.</span> <span class="nav-text">DAB-DETR</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dn-detr"><span class="nav-number">4.3.</span> <span class="nav-text">DN-DETR</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#label-noise"><span class="nav-number">4.3.1.</span> <span class="nav-text">Label Noise</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bounding-box-noise"><span class="nav-number">4.3.2.</span> <span class="nav-text">Bounding Box Noise</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#denoising-group"><span class="nav-number">4.3.3.</span> <span class="nav-text">Denoising Group</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#attention-mask-matrix"><span class="nav-number">4.3.4.</span> <span class="nav-text">Attention Mask Matrix</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#matching-performance-metric"><span class="nav-number">4.3.5.</span> <span class="nav-text">Matching Performance Metric</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#expanding-capabilities"><span class="nav-number">5.</span> <span class="nav-text">Expanding Capabilities</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#sam-detr"><span class="nav-number">5.1.</span> <span class="nav-text">SAM-DETR</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#achieving-semantic-alignment-through-resampling"><span class="nav-number">5.1.1.</span> <span class="nav-text">Achieving
+Semantic Alignment through Resampling</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#resampling-using-salient-point-features"><span class="nav-number">5.1.2.</span> <span class="nav-text">Resampling Using
+Salient Point Features</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#re-weighting-currently-computed-features-using-previous-information"><span class="nav-number">5.1.3.</span> <span class="nav-text">Re-weighting
+Currently Computed Features Using Previous Information</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#grounding-dino"><span class="nav-number">5.2.</span> <span class="nav-text">Grounding DINO</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#feature-extraction-and-fusion-enhancement"><span class="nav-number">5.2.1.</span> <span class="nav-text">Feature Extraction
+and Fusion Enhancement</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#query-selection-guided-by-natural-language"><span class="nav-number">5.2.2.</span> <span class="nav-text">Query Selection
+Guided by Natural Language</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cross-modality-decoder"><span class="nav-number">5.2.3.</span> <span class="nav-text">Cross-Modality Decoder</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#overall-comparison"><span class="nav-number">6.</span> <span class="nav-text">Overall Comparison</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#dataset"><span class="nav-number">6.1.</span> <span class="nav-text">Dataset</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#comparasion"><span class="nav-number">6.2.</span> <span class="nav-text">Comparasion</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#summary"><span class="nav-number">7.</span> <span class="nav-text">Summary</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-number">8.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">28527</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/0x6f6f" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;0x6f6f" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:lvdifine@gmail.com" title="E-Mail → mailto:lvdifine@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">28527</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
