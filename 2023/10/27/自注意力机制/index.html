@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.0">
 
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/faviconv1/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/faviconv1/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/faviconv1/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/faviconv1/favicon-16x16.png" color="#222">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -16,8 +16,10 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"0x6f6f.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"0x6f6f.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"default"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="Background 目的：从背景信息中挑选对当前任务目标更关键的信息。 应用场景：序列数据处理 机制分类：自注意力机制、空间注意力机制、时间注意力机制。 Classificiation   点积自注意力机制 NLP中自注意力机制的计算步骤：  预处理输入数据X 初始化权重\(W_Q,W_K,W_V\) 计算K,Q,V矩阵（仅限于输入部分的编码过程，encoder输出到">
 <meta property="og:type" content="article">
@@ -33,7 +35,7 @@
 <meta property="og:image" content="https://0x6f6f.github.io/2023/10/27/%E8%87%AA%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/%E7%BF%BB%E8%AF%91%E5%99%A8.png">
 <meta property="article:published_time" content="2023-10-27T09:33:33.000Z">
 <meta property="article:modified_time" content="2023-10-29T14:03:16.865Z">
-<meta property="article:author" content="28527">
+<meta property="article:author" content="0x6f6f">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://0x6f6f.github.io/2023/10/27/%E8%87%AA%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/Untitled.png">
 
@@ -115,8 +117,10 @@
 
         <div class="site-overview-wrap sidebar-panel">
           <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">28527</p>
-  <div class="site-description" itemprop="description"></div>
+    <img class="site-author-image" itemprop="image" alt="0x6f6f"
+      src="/images%5Cfaviconv1%5Cfavicon-32x32.png">
+  <p class="site-author-name" itemprop="name">0x6f6f</p>
+  <div class="site-description" itemprop="description">不积跬步，无以至千里。</div>
 </div>
 <div class="site-state-wrap animated">
   <nav class="site-state">
@@ -161,13 +165,13 @@
     <link itemprop="mainEntityOfPage" href="https://0x6f6f.github.io/2023/10/27/%E8%87%AA%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="28527">
+      <meta itemprop="image" content="/images%5Cfaviconv1%5Cfavicon-32x32.png">
+      <meta itemprop="name" content="0x6f6f">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="0x6f6f的小站">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="不积跬步，无以至千里。">
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
@@ -428,15 +432,15 @@ d_tensor，方便后面合并。</li>
     <div class="footer-inner">
 
   <div class="copyright">
-    &copy; 
+    &copy; 2023 – 
     <span itemprop="copyrightYear">2024</span>
     <span class="with-love">
       <i class="fa fa-heart"></i>
     </span>
-    <span class="author" itemprop="copyrightHolder">28527</span>
+    <span class="author" itemprop="copyrightHolder">0x6f6f@cqu</span>
   </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
-  </div>
+  </div><script color="0,0,255" opacity="0.5" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
 
     </div>
   </footer>
@@ -468,6 +472,7 @@ d_tensor，方便后面合并。</li>
 
 
 
+  <script src="/js/third-party/pace.js"></script>
 
 
   
