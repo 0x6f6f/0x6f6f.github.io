@@ -486,7 +486,7 @@ class="math inline">\(K^T\)</span>的内积，这一项的意义在于度量Q和
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-24 14:36:51" itemprop="dateModified" datetime="2023-10-24T14:36:51+08:00">2023-10-24</time>
+      <time title="Modified: 2024-01-23 20:38:49" itemprop="dateModified" datetime="2024-01-23T20:38:49+08:00">2024-01-23</time>
     </span>
 
   
@@ -538,6 +538,14 @@ clash然后执行以下指令启动screen，在机器上运行一个命令行代
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export http_proxy=&#x27;http://localhost:[你设置的http代理端口]&#x27;</span><br><span class="line">export https_proxy=&#x27;http://localhost:[你设置的http代理端口]&#x27;</span><br></pre></td></tr></table></figure>
 <p>这个端口有可能被占用，如果被占了就换一个，配置文件在~/clash/glados.yaml</p>
 <p>测试: <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget www.google.com</span><br></pre></td></tr></table></figure> 如果正常则可以使用。</p>
+<h3 id="代理端口失效时的修复方法">代理端口失效时的修复方法</h3>
+<p>有时候可能会开着clash，网络也连上了但是没网的情况，这时候得重置一下代理端口：</p>
+<p>可以查看当前系统中的代理设置，http_proxy/https_proxy这两个设置项应该是小写的:</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">env | grep -i proxy</span><br></pre></td></tr></table></figure>
+<p>如果和clash端口号对不上的话就清掉：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">unset http_proxy</span><br><span class="line">unset https_proxy</span><br><span class="line">unset HTTP_PROXY</span><br><span class="line">unset HTTPS_PROXY</span><br></pre></td></tr></table></figure>
+<p>然后再手动设置或者持久化到~/.bashrc里，7892换成glados.yaml里面规定的端口：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">export http_proxy=http://127.0.0.1:7892</span><br><span class="line">export https_proxy=http://127.0.0.1:7892</span><br><span class="line">export HTTP_PROXY=http://127.0.0.1:7892</span><br><span class="line">export HTTPS_PROXY=http://127.0.0.1:7892</span><br></pre></td></tr></table></figure>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2023/09/21/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%B8%E5%85%B3/#more" rel="contents">
