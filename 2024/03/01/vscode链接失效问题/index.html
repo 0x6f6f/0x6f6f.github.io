@@ -29,7 +29,7 @@
 <meta property="og:description" content="1. vscode If you continue to see this message, you can try toggling the remote.SSH.useFloc  现象描述：循环报错无法上传新版本服务端 故障原因：ssh链接使用的文件锁失效 解决方案：在本地ctrl+shift+p打开控制面板，输入Kill VS Code Server on Host，关闭连不上的">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-03-01T08:29:52.000Z">
-<meta property="article:modified_time" content="2024-03-01T08:36:49.451Z">
+<meta property="article:modified_time" content="2024-03-01T08:44:57.535Z">
 <meta property="article:author" content="0x6f6f">
 <meta property="article:tag" content="服务器相关">
 <meta name="twitter:card" content="summary">
@@ -109,8 +109,7 @@
         <div class="post-toc-wrap sidebar-panel">
             <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#vscode-if-you-continue-to-see-this-message-you-can-try-toggling-the-remote.ssh.usefloc"><span class="nav-number">1.</span> <span class="nav-text">1.
 vscode If you continue to see this message, you can try toggling the
-remote.SSH.useFloc</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%85%E8%A1%A5%E5%85%85%E5%90%8E%E9%9D%A2%E5%8F%88%E5%87%BA%E6%AF%9B%E7%97%85%E4%BA%86%E5%86%8D%E8%A1%A5%E5%90%A7"><span class="nav-number">2.</span> <span class="nav-text">2.
-待补充，后面又出毛病了再补吧。</span></a></li></ol></div>
+remote.SSH.useFloc</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%A9%BA%E9%97%B4%E4%B8%8D%E8%B6%B3%E5%AF%BC%E8%87%B4%E6%97%A0%E6%B3%95%E6%9B%B4%E6%96%B0"><span class="nav-number">2.</span> <span class="nav-text">2. 服务器空间不足导致无法更新</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -125,12 +124,12 @@ remote.SSH.useFloc</span></a></li><li class="nav-item nav-level-2"><a class="nav
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-count">7</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">2</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -195,7 +194,7 @@ remote.SSH.useFloc</span></a></li><li class="nav-item nav-level-2"><a class="nav
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2024-03-01 16:29:52 / Modified: 16:36:49" itemprop="dateCreated datePublished" datetime="2024-03-01T16:29:52+08:00">2024-03-01</time>
+      <time title="Created: 2024-03-01 16:29:52 / Modified: 16:44:57" itemprop="dateCreated datePublished" datetime="2024-03-01T16:29:52+08:00">2024-03-01</time>
     </span>
 
   
@@ -238,8 +237,11 @@ remote.SSH.useFloc</h2>
 <li><p>解决方案：在本地ctrl+shift+p打开控制面板，输入<code>Kill VS Code Server on Host</code>，关闭连不上的服务器上面的vscode服务端。此时重新连接即可。</p></li>
 </ul>
 <span id="more"></span>
-<h2 id="待补充后面又出毛病了再补吧">2.
-待补充，后面又出毛病了再补吧。</h2>
+<h2 id="服务器空间不足导致无法更新">2. 服务器空间不足导致无法更新</h2>
+<ul>
+<li>现象描述：mkdir: 无法创建目录
+"/home/cquer/.vscode-server/bin/019f4d1419fbc8219a181fab7892</li>
+</ul>
 
     </div>
 
@@ -261,6 +263,9 @@ remote.SSH.useFloc</h2>
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/2024/04/07/Gin-Web%E6%A1%86%E6%9E%B6%E8%AE%B0%E5%BD%95/" rel="next" title="Gin Web框架记录">
+                  Gin Web框架记录 <i class="fa fa-angle-right"></i>
+                </a>
             </div>
           </div>
     </footer>

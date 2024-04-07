@@ -118,12 +118,12 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-count">7</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">2</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -148,6 +148,172 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://0x6f6f.github.io/2024/04/07/Gin-Web%E6%A1%86%E6%9E%B6%E8%AE%B0%E5%BD%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/faviconv1/favicon-32x32.png">
+      <meta itemprop="name" content="0x6f6f">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="0x6f6f的小站">
+      <meta itemprop="description" content="不积跬步，无以至千里。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 0x6f6f的小站">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/04/07/Gin-Web%E6%A1%86%E6%9E%B6%E8%AE%B0%E5%BD%95/" class="post-title-link" itemprop="url">Gin Web框架记录</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2024-04-07 16:47:01 / Modified: 16:47:43" itemprop="dateCreated datePublished" datetime="2024-04-07T16:47:01+08:00">2024-04-07</time>
+    </span>
+
+  
+    <span id="/2024/04/07/Gin-Web%E6%A1%86%E6%9E%B6%E8%AE%B0%E5%BD%95/" class="post-meta-item leancloud_visitors" data-flag-title="Gin Web框架记录" title="Views">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline: </span>
+  
+    <a title="waline" href="/2024/04/07/Gin-Web%E6%A1%86%E6%9E%B6%E8%AE%B0%E5%BD%95/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2024/04/07/Gin-Web%E6%A1%86%E6%9E%B6%E8%AE%B0%E5%BD%95/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="背景">1.背景</h3>
+<p>Gin 是一个 golang 的 web 框架，封装比较优雅，API
+友好，源码注释比较明确，具有快速灵活，容错方便等特点。它的主要作者是 <a
+href="https://link.zhihu.com/?target=https%3A//github.com/manucorporat">Manu</a>，<a
+href="https://link.zhihu.com/?target=https%3A//github.com/javierprovecho">Javier</a>
+和 <a
+href="https://link.zhihu.com/?target=https%3A//github.com/appleboy">Bo-Yi
+Wu</a>，2016 年发布第一个版本，目前是最受欢迎的开源 Go 框架。</p>
+<p>根据 <a
+target="_blank" rel="noopener" href="https://www.techempower.com/benchmarks/#hw=ph&amp;test=fortune&amp;section=data-r22">Round
+22 results - TechEmpower Framework Benchmarks</a> 对现存的 web
+框架的排名，Gin 框架以 95900 分的成绩位列第 185
+名，与之相对的，业界常用的其他 web 框架比如 Spring 仅有 24082 分，位列第
+381 名，可见 Gin 的效率远高于 spring 框架。</p>
+<p>考虑到采用 go 进行开发时，其他排名靠前的 web 框架的生态并不如 Gin
+完善，因此采用 Gin 是一个不错的选择。Gin
+包含的组件和支持的功能如下：</p>
+<table>
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 86%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>组件</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>server</td>
+<td>作为 server，监听端口，接受请求</td>
+</tr>
+<tr class="even">
+<td>router</td>
+<td>路由和分组路由，可以把请求路由到对应的处理函数</td>
+</tr>
+<tr class="odd">
+<td>middleware</td>
+<td>支持中间件，对外部发过来的 http
+请求经过中间件处理，再给到对应的处理函数。例如 http
+请求的日志记录、请求鉴权(比如校验 token)、CORS 支持、CSRF 校验等</td>
+</tr>
+<tr class="even">
+<td>template engine</td>
+<td>模板引擎，支持后端代码对 html
+模板里的内容做渲染(render)，返回给前端渲染好的 html</td>
+</tr>
+<tr class="odd">
+<td>Crash-free</td>
+<td>捕捉运行期处理 http 请求过程中的 panic 并且做 recover
+操作，让服务一直可用</td>
+</tr>
+<tr class="even">
+<td>JSON validation</td>
+<td>解析和验证 request 里的 JSON 内容，比如字段必填等。</td>
+</tr>
+<tr class="odd">
+<td>Error management</td>
+<td>Gin 提供了一种简单的方式可以收集 http request
+处理过程中的错误，最终中间件可以选择把这些错误写入到 log
+文件、数据库或者发送到其它系统。</td>
+</tr>
+<tr class="even">
+<td>Middleware Extendtable</td>
+<td>支持用户自定义中间件</td>
+</tr>
+</tbody>
+</table>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/04/07/Gin-Web%E6%A1%86%E6%9E%B6%E8%AE%B0%E5%BD%95/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -187,7 +353,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2024-03-01 16:29:52 / Modified: 16:36:49" itemprop="dateCreated datePublished" datetime="2024-03-01T16:29:52+08:00">2024-03-01</time>
+      <time title="Created: 2024-03-01 16:29:52 / Modified: 16:44:57" itemprop="dateCreated datePublished" datetime="2024-03-01T16:29:52+08:00">2024-03-01</time>
     </span>
 
   

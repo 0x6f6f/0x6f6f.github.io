@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="C:\Users\Aressions\blog\themes\next\source\images\faviconv1\apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="C:\Users\Aressions\blog\themes\next\source\images\faviconv1\favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="C:\Users\Aressions\blog\themes\next\source\images\faviconv1\favicon-16x16.png">
+  <link rel="mask-icon" href="C:\Users\Aressions\blog\themes\next\source\images\faviconv1\favicon-16x16.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"0x6f6f.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"default"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="1.背景 Gin 是一个 golang 的 web 框架，封装比较优雅，API 友好，源码注释比较明确，具有快速灵活，容错方便等特点。它的主要作者是 Manu，Javier 和 Bo-Yi Wu，2016 年发布第一个版本，目前是最受欢迎的开源 Go 框架。 根据 Round 22 results - TechEmpower Framework Benchmarks 对现存的 web">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Gin Web框架记录">
+<meta property="og:url" content="https://0x6f6f.github.io/2024/04/07/Gin-Web%E6%A1%86%E6%9E%B6%E8%AE%B0%E5%BD%95/index.html">
+<meta property="og:site_name" content="0x6f6f的小站">
+<meta property="og:description" content="1.背景 Gin 是一个 golang 的 web 框架，封装比较优雅，API 友好，源码注释比较明确，具有快速灵活，容错方便等特点。它的主要作者是 Manu，Javier 和 Bo-Yi Wu，2016 年发布第一个版本，目前是最受欢迎的开源 Go 框架。 根据 Round 22 results - TechEmpower Framework Benchmarks 对现存的 web">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://0x6f6f.github.io/2024/04/07/Gin-Web%E6%A1%86%E6%9E%B6%E8%AE%B0%E5%BD%95/assets/image-20240407160749-8q0tv2w.png">
+<meta property="og:image" content="https://0x6f6f.github.io/2024/04/07/Gin-Web%E6%A1%86%E6%9E%B6%E8%AE%B0%E5%BD%95/assets/image-20240407161051-0p197zl.png">
+<meta property="article:published_time" content="2024-04-07T08:47:01.000Z">
+<meta property="article:modified_time" content="2024-04-07T08:47:43.933Z">
+<meta property="article:author" content="0x6f6f">
+<meta property="article:tag" content="Go">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://0x6f6f.github.io/2024/04/07/Gin-Web%E6%A1%86%E6%9E%B6%E8%AE%B0%E5%BD%95/assets/image-20240407160749-8q0tv2w.png">
+
+
+<link rel="canonical" href="https://0x6f6f.github.io/2024/04/07/Gin-Web%E6%A1%86%E6%9E%B6%E8%AE%B0%E5%BD%95/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://0x6f6f.github.io/2024/04/07/Gin-Web%E6%A1%86%E6%9E%B6%E8%AE%B0%E5%BD%95/","path":"2024/04/07/Gin-Web框架记录/","title":"Gin Web框架记录"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Gin Web框架记录 | 0x6f6f的小站</title>
+  
+
+
+
+
+
+
+
+<link rel="dns-prefetch" href="0x6f6f-waline-server.vercel.app">
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">0x6f6f的小站</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">1.背景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E4%B8%8E%E9%A1%B9%E7%9B%AE%E5%88%9B%E5%BB%BA"><span class="nav-number">2.</span> <span class="nav-text">2.安装与项目创建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8A%80%E6%9C%AF%E5%8E%9F%E7%90%86"><span class="nav-number">3.</span> <span class="nav-text">3.技术原理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A8%8B%E5%BA%8F%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 程序启动流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#gin-%E6%A1%86%E6%9E%B6%E8%B7%AF%E7%94%B1%E5%8E%9F%E7%90%86"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 Gin 框架路由原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#gin-%E6%A1%86%E6%9E%B6%E4%B8%AD%E9%97%B4%E4%BB%B6%E5%8E%9F%E7%90%86"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 Gin 框架中间件原理</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B"><span class="nav-number">4.</span> <span class="nav-text">4.示例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E8%87%AA%E5%AE%9A%E4%B9%89%E4%B8%AD%E9%97%B4%E4%BB%B6"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 使用自定义中间件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#restful%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 Restful后端服务</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="0x6f6f"
+      src="/images/faviconv1/favicon-32x32.png">
+  <p class="site-author-name" itemprop="name">0x6f6f</p>
+  <div class="site-description" itemprop="description">不积跬步，无以至千里。</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/0x6f6f" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;0x6f6f" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:lvdifine@gmail.com" title="E-Mail → mailto:lvdifine@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://0x6f6f.github.io/2024/04/07/Gin-Web%E6%A1%86%E6%9E%B6%E8%AE%B0%E5%BD%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/faviconv1/favicon-32x32.png">
+      <meta itemprop="name" content="0x6f6f">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="0x6f6f的小站">
+      <meta itemprop="description" content="不积跬步，无以至千里。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Gin Web框架记录 | 0x6f6f的小站">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Gin Web框架记录
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2024-04-07 16:47:01 / Modified: 16:47:43" itemprop="dateCreated datePublished" datetime="2024-04-07T16:47:01+08:00">2024-04-07</time>
+    </span>
+
+  
+    <span id="/2024/04/07/Gin-Web%E6%A1%86%E6%9E%B6%E8%AE%B0%E5%BD%95/" class="post-meta-item leancloud_visitors" data-flag-title="Gin Web框架记录" title="Views">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline: </span>
+  
+    <a title="waline" href="/2024/04/07/Gin-Web%E6%A1%86%E6%9E%B6%E8%AE%B0%E5%BD%95/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2024/04/07/Gin-Web%E6%A1%86%E6%9E%B6%E8%AE%B0%E5%BD%95/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h3 id="背景">1.背景</h3>
+<p>Gin 是一个 golang 的 web 框架，封装比较优雅，API
+友好，源码注释比较明确，具有快速灵活，容错方便等特点。它的主要作者是 <a
+href="https://link.zhihu.com/?target=https%3A//github.com/manucorporat">Manu</a>，<a
+href="https://link.zhihu.com/?target=https%3A//github.com/javierprovecho">Javier</a>
+和 <a
+href="https://link.zhihu.com/?target=https%3A//github.com/appleboy">Bo-Yi
+Wu</a>，2016 年发布第一个版本，目前是最受欢迎的开源 Go 框架。</p>
+<p>根据 <a
+target="_blank" rel="noopener" href="https://www.techempower.com/benchmarks/#hw=ph&amp;test=fortune&amp;section=data-r22">Round
+22 results - TechEmpower Framework Benchmarks</a> 对现存的 web
+框架的排名，Gin 框架以 95900 分的成绩位列第 185
+名，与之相对的，业界常用的其他 web 框架比如 Spring 仅有 24082 分，位列第
+381 名，可见 Gin 的效率远高于 spring 框架。</p>
+<p>考虑到采用 go 进行开发时，其他排名靠前的 web 框架的生态并不如 Gin
+完善，因此采用 Gin 是一个不错的选择。Gin
+包含的组件和支持的功能如下：</p>
+<table>
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 86%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>组件</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>server</td>
+<td>作为 server，监听端口，接受请求</td>
+</tr>
+<tr class="even">
+<td>router</td>
+<td>路由和分组路由，可以把请求路由到对应的处理函数</td>
+</tr>
+<tr class="odd">
+<td>middleware</td>
+<td>支持中间件，对外部发过来的 http
+请求经过中间件处理，再给到对应的处理函数。例如 http
+请求的日志记录、请求鉴权(比如校验 token)、CORS 支持、CSRF 校验等</td>
+</tr>
+<tr class="even">
+<td>template engine</td>
+<td>模板引擎，支持后端代码对 html
+模板里的内容做渲染(render)，返回给前端渲染好的 html</td>
+</tr>
+<tr class="odd">
+<td>Crash-free</td>
+<td>捕捉运行期处理 http 请求过程中的 panic 并且做 recover
+操作，让服务一直可用</td>
+</tr>
+<tr class="even">
+<td>JSON validation</td>
+<td>解析和验证 request 里的 JSON 内容，比如字段必填等。</td>
+</tr>
+<tr class="odd">
+<td>Error management</td>
+<td>Gin 提供了一种简单的方式可以收集 http request
+处理过程中的错误，最终中间件可以选择把这些错误写入到 log
+文件、数据库或者发送到其它系统。</td>
+</tr>
+<tr class="even">
+<td>Middleware Extendtable</td>
+<td>支持用户自定义中间件</td>
+</tr>
+</tbody>
+</table>
+<span id="more"></span>
+<h3 id="安装与项目创建">2.安装与项目创建</h3>
+<p>要使用 Gin 框架上手进行后端开发，可以遵循以下步骤：</p>
+<ol type="1">
+<li><p>安装 Go 语言支持（Gin 目前需要 1.13 以上版本的 Go 环境）</p>
+<p>从 <a target="_blank" rel="noopener" href="https://go.dev/dl/">All releases - The Go Programming
+Language</a> 下载对应系统的安装包（此处以 linux
+为例），保存到服务器上，解压到/usr/local/go。</p>
+<p>解压后，输入 <code>sudo nano /etc/profile</code>
+打开配置文件，在文件末尾添加路径
+<code>export PATH=$PATH:/usr/local/go/bin</code>，保存退出后使用
+<code>source /etc/profile</code> 使环境变量配置生效。</p></li>
+<li><p>安装 Gin 框架</p>
+<p>在命令行输入
+<code>go get -u github.com/gin-gonic/gin</code>，在全局下载安装 Gin
+框架</p></li>
+<li><p>拷贝初始模板与运行</p>
+<p>在命令行输入
+<code>curl https://raw.githubusercontent.com/gin-gonic/examples/master/basic/main.go &gt; main.go</code>
+拷贝一个初始模板并使用 <code>go run main.go</code> 运行即可</p></li>
+</ol>
+<h3 id="技术原理">3.技术原理</h3>
+<h4 id="程序启动流程">3.1 程序启动流程</h4>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;github.com/LearnGin/handler&quot;</span></span><br><span class="line">	<span class="string">&quot;github.com/LearnGin/middleware&quot;</span></span><br><span class="line">	<span class="string">&quot;github.com/gin-gonic/gin&quot;</span></span><br><span class="line">)</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="comment">// init gin with default configs</span></span><br><span class="line">	r := gin.Default()</span><br><span class="line">	<span class="comment">// append custom middle-wares</span></span><br><span class="line">	middleware.RegisterMiddleware(r)</span><br><span class="line">	<span class="comment">// register custom routers</span></span><br><span class="line">	handler.RegisterHandler(r)</span><br><span class="line">	<span class="comment">// run the engine</span></span><br><span class="line">	r.Run()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>结合上述 Gin 框架的主函数，我们可以梳理 Gin
+后端程序的启动流程如下：</p>
+<ol type="1">
+<li><p><strong>初始化 Gin</strong>：<code>gin.Default()</code> 执行 Gin
+的初始化过程，默认的初始化包含两个中间件</p>
+<p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Default returns an Engine instance with the Logger and Recovery middleware already attached.</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Default</span><span class="params">()</span></span> *Engine &#123;</span><br><span class="line">	debugPrintWARNINGDefault()</span><br><span class="line">	engine := New()</span><br><span class="line">	engine.Use(Logger(), Recovery())</span><br><span class="line">	<span class="keyword">return</span> engine</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ol type="1">
+<li><strong>Logger</strong>：日志中间件，将 Gin
+的启动与响应日志输出到控制台；</li>
+<li><strong>Recovery</strong>：恢复中间件，将 Gin 遇到的无法处理的请求按
+HTTP 500 状态码返回。</li>
+</ol></li>
+<li><p><strong>注册中间件</strong>：本例的
+<code>middleware.RegisterMiddleware(r)</code>
+用于将项目中开发的中间件注册到 Gin Engine
+上;<code>RegisterMiddleware</code> 的定义如下：</p>
+<p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> middleware</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;github.com/LearnGin/middleware/debug&quot;</span></span><br><span class="line">	<span class="string">&quot;github.com/gin-gonic/gin&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">RegisterMiddleware</span><span class="params">(r *gin.Engine)</span></span> &#123;</span><br><span class="line">	r.Use(debug.DebugMiddleWare())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>其中，<code>r.Use</code> 负责将 gin.HandleFunc
+类型函数注册为中间件。此处的 <code>debug.DebugMiddleWare()</code>
+是本例开发的一个简易的自定义中间件，用于在实际的事件处理前，输出详细的请求信息；在实际的事件处理后，输出结果状态码。</p></li>
+<li><p><strong>注册事件处理</strong>：本例的
+<code>handler.RegisterHandler(r)</code> 用于将项目中开发的对应于指定 URL
+的事件处理函数注册到 Gin Engine 上；</p>
+<p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> handler</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;github.com/LearnGin/handler/person&quot;</span></span><br><span class="line">	<span class="string">&quot;github.com/gin-gonic/gin&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">RegisterHandler</span><span class="params">(r *gin.Engine)</span></span> &#123;</span><br><span class="line">	r.Handle(<span class="string">&quot;GET&quot;</span>, <span class="string">&quot;/ping&quot;</span>, PingHandler())</span><br><span class="line">	r.Handle(<span class="string">&quot;POST&quot;</span>, <span class="string">&quot;/person/create&quot;</span>, person.CreatePersonHandler())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>gin.Engine 的 <code>r.Handle</code>
+函数用于将事件处理函数注册到指定的 HTTP 方法 + 相对路径上。</p></li>
+<li><p><strong>启动 Gin</strong>：<code>r.Run()</code> 负责启动 Gin
+Engine，开始监听请求并提供 HTTP 服务。</p>
+<p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(engine *Engine)</span></span> Run(addr ...<span class="type">string</span>) (err <span class="type">error</span>) &#123;</span><br><span class="line">	<span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123; debugPrintError(err) &#125;()</span><br><span class="line"></span><br><span class="line">	trustedCIDRs, err := engine.prepareTrustedCIDRs()</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> err</span><br><span class="line">	&#125;</span><br><span class="line">	engine.trustedCIDRs = trustedCIDRs</span><br><span class="line">	address := resolveAddress(addr)</span><br><span class="line">	debugPrint(<span class="string">&quot;Listening and serving HTTP on %s\n&quot;</span>, address)</span><br><span class="line">	err = http.ListenAndServe(address, engine)</span><br><span class="line">	<span class="keyword">return</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>可以看到，Engine.Run 函数主要是：</p>
+<ol type="1">
+<li>解析监听地址传参；</li>
+<li>启动监听与服务。</li>
+</ol>
+<p>其中，最核心的监听与服务实质上是调用 Go 语言内置库 net/http 的
+<code>http.ListenAndServe</code> 函数实现的。</p>
+<p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">ListenAndServe</span><span class="params">(addr <span class="type">string</span>, handler Handler)</span></span> <span class="type">error</span> &#123;</span><br><span class="line">	server := &amp;Server&#123;Addr: addr, Handler: handler&#125;</span><br><span class="line">	<span class="keyword">return</span> server.ListenAndServe()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>该函数实例化 Sever，并调用其 <code>ListenAndServe</code>
+函数实现监听与服务功能。</p>
+<p><strong>注意</strong>：此时，输入的 Gin Engine 对象以 <strong>Handler
+接口</strong>的对象的形式被传入给了 net/http 库的 Server 对象，作为后续
+Serve 对象处理网络请求时调用的函数。</p></li>
+</ol>
+<h4 id="gin-框架路由原理">3.2 Gin 框架路由原理</h4>
+<p>Gin 框架使用的是定制版本的 <a
+target="_blank" rel="noopener" href="https://github.com/julienschmidt/httprouter">httprouter</a>，其路由注册和查询功能是通过维护一个基数树（Radix
+Tree）来实现的。基数树又称为 PAT 位树（Patricia Trie or crit bit
+tree），本质上是对字典树（Trie
+Tree）的进一步压缩。对于基数树的每个节点，如果该节点是唯一的子树的话，就和父节点合并。关于前缀树和基数树，具体可以参考这里的介绍：<a
+target="_blank" rel="noopener" href="https://pdai.tech/md/algorithm/alg-basic-tree-trie.html">树-
+前缀树(Trie Tree)</a>，<a
+target="_blank" rel="noopener" href="https://blog.ihypo.net/16506944639091.html">图解基数树(RadixTree)</a>。</p>
+<p>对于如下路由注册信息：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">r := gin.Default()</span><br><span class="line"></span><br><span class="line">r.GET(<span class="string">&quot;/&quot;</span>, func1)</span><br><span class="line">r.GET(<span class="string">&quot;/search/&quot;</span>, func2)</span><br><span class="line">r.GET(<span class="string">&quot;/support/&quot;</span>, func3)</span><br><span class="line">r.GET(<span class="string">&quot;/blog/&quot;</span>, func4)</span><br><span class="line">r.GET(<span class="string">&quot;/blog/:post/&quot;</span>, func5)</span><br><span class="line">r.GET(<span class="string">&quot;/about-us/&quot;</span>, func6)</span><br><span class="line">r.GET(<span class="string">&quot;/about-us/team/&quot;</span>, func7)</span><br><span class="line">r.GET(<span class="string">&quot;/contact/&quot;</span>, func8)</span><br></pre></td></tr></table></figure>
+<p>Gin 会对 GET 方法给出一棵如下所示的路由树：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Priority   Path             Handle</span><br><span class="line"><span class="number">9</span>          \                *&lt;<span class="number">1</span>&gt;</span><br><span class="line"><span class="number">3</span>          ├s               <span class="literal">nil</span></span><br><span class="line"><span class="number">2</span>          |├earch\         *&lt;<span class="number">2</span>&gt;</span><br><span class="line"><span class="number">1</span>          |└upport\        *&lt;<span class="number">3</span>&gt;</span><br><span class="line"><span class="number">2</span>          ├blog\           *&lt;<span class="number">4</span>&gt;</span><br><span class="line"><span class="number">1</span>          |    └:post      <span class="literal">nil</span></span><br><span class="line"><span class="number">1</span>          |         └\     *&lt;<span class="number">5</span>&gt;</span><br><span class="line"><span class="number">2</span>          ├about-us\       *&lt;<span class="number">6</span>&gt;</span><br><span class="line"><span class="number">1</span>          |        └team\  *&lt;<span class="number">7</span>&gt;</span><br><span class="line"><span class="number">1</span>          └contact\        *&lt;<span class="number">8</span>&gt;</span><br></pre></td></tr></table></figure>
+<p>其中，最右侧一列是指向路由节点对应的处理函数的指针，完整遍历该树即可输出对应于
+GET 方法的路由表。类似于:post 的占位符和 s
+的中间节点不存在对应处理函数。Gin
+为每种请求方法单独维护路由树，并为各个数级别上的子节点分配优先级。一个节点的优先级在数值上等于其所有子节点中注册的句柄数，这样可以优先匹配被大多数路由路径包含的节点，同时使得最长的路径被优先匹配以抵消其较长的搜索时间。</p>
+<p>Gin 维护的路由基数树数据结构如下：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// tree.go</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> node <span class="keyword">struct</span> &#123;</span><br><span class="line">   <span class="comment">// 节点路径，比如上面的s，earch，和upport</span></span><br><span class="line">	path      <span class="type">string</span></span><br><span class="line">	<span class="comment">// 和children字段对应, 保存的是分裂的分支的第一个字符</span></span><br><span class="line">	<span class="comment">// 例如search和support, 那么s节点的indices对应的&quot;eu&quot;</span></span><br><span class="line">	<span class="comment">// 代表有两个分支, 分支的首字母分别是e和u</span></span><br><span class="line">	indices   <span class="type">string</span></span><br><span class="line">	<span class="comment">// 儿子节点</span></span><br><span class="line">	children  []*node</span><br><span class="line">	<span class="comment">// 处理函数链条（切片）</span></span><br><span class="line">	handlers  HandlersChain</span><br><span class="line">	<span class="comment">// 优先级，子节点、子子节点等注册的handler数量</span></span><br><span class="line">	priority  <span class="type">uint32</span></span><br><span class="line">	<span class="comment">// 节点类型，包括static, root, param, catchAll</span></span><br><span class="line">	<span class="comment">// static: 静态节点（默认），比如上面的s，earch等节点</span></span><br><span class="line">	<span class="comment">// root: 树的根节点</span></span><br><span class="line">	<span class="comment">// catchAll: 有*匹配的节点</span></span><br><span class="line">	<span class="comment">// param: 参数节点</span></span><br><span class="line">	nType     nodeType</span><br><span class="line">	<span class="comment">// 路径上最大参数个数</span></span><br><span class="line">	maxParams <span class="type">uint8</span></span><br><span class="line">	<span class="comment">// 节点是否是参数节点，比如上面的:post</span></span><br><span class="line">	wildChild <span class="type">bool</span></span><br><span class="line">	<span class="comment">// 完整路径</span></span><br><span class="line">	fullPath  <span class="type">string</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">type</span> methodTree <span class="keyword">struct</span> &#123;</span><br><span class="line">	method <span class="type">string</span></span><br><span class="line">	root   *node</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">type</span> methodTrees []methodTree  <span class="comment">// slice</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(trees methodTrees)</span></span> get(method <span class="type">string</span>) *node &#123; <span class="comment">// 返回对应方法的基数树</span></span><br><span class="line">	<span class="keyword">for</span> _, tree := <span class="keyword">range</span> trees &#123;</span><br><span class="line">		<span class="keyword">if</span> tree.method == method &#123;</span><br><span class="line">			<span class="keyword">return</span> tree.root</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="gin-框架中间件原理">3.3 Gin 框架中间件原理</h4>
+<p>在程序启动一节我们已经简要说明了如何向 Gin
+引擎注册中间件，这里我们进一步说明中间件的注册和执行原理。</p>
+<p>Engine 的 Use 方法调用的是 RouterGroup 的 Use
+函数，另外加上了两个处理资源不存在情况的 404 和 405 错误处理中间件：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(engine *Engine)</span></span> Use(middleware ...HandlerFunc) IRoutes &#123;</span><br><span class="line">	engine.RouterGroup.Use(middleware...)  <span class="comment">// 实际上还是调用的RouterGroup的Use函数</span></span><br><span class="line">	engine.rebuild404Handlers()</span><br><span class="line">	engine.rebuild405Handlers()</span><br><span class="line">	<span class="keyword">return</span> engine</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>而在 RouterGroup 中的 Use 方法实际上是将中间件函数追加到了
+group.Handlers 列表中：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(group *RouterGroup)</span></span> Use(middleware ...HandlerFunc) IRoutes &#123;</span><br><span class="line">	group.Handlers = <span class="built_in">append</span>(group.Handlers, middleware...)</span><br><span class="line">	<span class="keyword">return</span> group.returnObj()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注册路由时，Gin
+会将路由处理函数和中间件<strong>全部组合</strong>成一个处理函数链（<code>HandlersChain</code>），这是由
+<code>HandlerFunc</code> 组成的切片：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(group *RouterGroup)</span></span> handle(httpMethod, relativePath <span class="type">string</span>, handlers HandlersChain) IRoutes &#123;</span><br><span class="line">	absolutePath := group.calculateAbsolutePath(relativePath)</span><br><span class="line">	handlers = group.combineHandlers(handlers)  <span class="comment">// 将处理请求的函数与中间件函数结合</span></span><br><span class="line">	group.engine.addRoute(httpMethod, absolutePath, handlers)</span><br><span class="line">	<span class="keyword">return</span> group.returnObj()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> abortIndex <span class="type">int8</span> = math.MaxInt8 / <span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(group *RouterGroup)</span></span> combineHandlers(handlers HandlersChain) HandlersChain &#123;</span><br><span class="line">	finalSize := <span class="built_in">len</span>(group.Handlers) + <span class="built_in">len</span>(handlers)</span><br><span class="line">	<span class="keyword">if</span> finalSize &gt;= <span class="type">int</span>(abortIndex) &#123;  <span class="comment">// 这里有一个最大限制</span></span><br><span class="line">		<span class="built_in">panic</span>(<span class="string">&quot;too many handlers&quot;</span>)</span><br><span class="line">	&#125;</span><br><span class="line">	mergedHandlers := <span class="built_in">make</span>(HandlersChain, finalSize)</span><br><span class="line">	<span class="built_in">copy</span>(mergedHandlers, group.Handlers)</span><br><span class="line">	<span class="built_in">copy</span>(mergedHandlers[<span class="built_in">len</span>(group.Handlers):], handlers)</span><br><span class="line">	<span class="keyword">return</span> mergedHandlers</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 处理函数链</span></span><br><span class="line"><span class="keyword">type</span> HandlersChain []HandlerFunc</span><br></pre></td></tr></table></figure>
+<p>中间件和路由处理函数的执行是通过 <code>c.Next()</code>
+方法触发的，其中 c 代表 Context 对象。该方法循环遍历
+<code>HandlersChain</code>，依次执行每个 <code>HandlerFunc</code>：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c *Context)</span></span> Next() &#123;</span><br><span class="line">	c.index++</span><br><span class="line">	<span class="keyword">for</span> c.index &lt; <span class="type">int8</span>(<span class="built_in">len</span>(c.handlers)) &#123;</span><br><span class="line">		c.handlers[c.index](c)</span><br><span class="line">		c.index++</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注册到函数链条的函数可以顺序执行，也可以嵌套执行。如下图所示：</p>
+<figure>
+<img src="assets/image-20240407160749-8q0tv2w.png" alt="image" />
+<figcaption aria-hidden="true">image</figcaption>
+</figure>
+<p>在执行一个调用时，通过在该调用内部使用 c.Next
+方法可以跳跃至后一个函数调用中；两个函数调用可以通过 c.Set 和 c.Get
+两种方法传递数据，如下图所示：</p>
+<figure>
+<img src="assets/image-20240407161051-0p197zl.png" alt="image" />
+<figcaption aria-hidden="true">image</figcaption>
+</figure>
+<h3 id="示例">4.示例</h3>
+<h4 id="使用自定义中间件">4.1 使用自定义中间件</h4>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Logger</span><span class="params">()</span></span> gin.HandlerFunc &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">		t := time.Now()  <span class="comment">// 记录当前时间</span></span><br><span class="line"></span><br><span class="line">		<span class="comment">// 设置示例变量</span></span><br><span class="line">		c.Set(<span class="string">&quot;example&quot;</span>, <span class="string">&quot;12345&quot;</span>)</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 在请求之前</span></span><br><span class="line">		c.Next()</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 在请求之后</span></span><br><span class="line">		latency := time.Since(t)  <span class="comment">// 计算请求处理时间</span></span><br><span class="line">		log.Print(latency)  <span class="comment">// 打印请求处理时间</span></span><br><span class="line"></span><br><span class="line">		<span class="comment">// 获取发送的状态</span></span><br><span class="line">		status := c.Writer.Status()</span><br><span class="line">		log.Println(status)  <span class="comment">// 打印状态码</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	r := gin.New()</span><br><span class="line">	r.Use(Logger())  <span class="comment">// 使用自定义的日志中间件</span></span><br><span class="line"></span><br><span class="line">	r.GET(<span class="string">&quot;/test&quot;</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">		example := c.MustGet(<span class="string">&quot;example&quot;</span>).(<span class="type">string</span>)</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 输出：&quot;12345&quot;</span></span><br><span class="line">		log.Println(example)  <span class="comment">// 打印示例变量</span></span><br><span class="line">	&#125;)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 监听并在 0.0.0.0:8080 上提供服务</span></span><br><span class="line">	r.Run(<span class="string">&quot;:8080&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="restful后端服务">4.2 Restful后端服务</h4>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;net/http&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="string">&quot;github.com/gin-gonic/gin&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// album 代表唱片专辑的数据。</span></span><br><span class="line"><span class="keyword">type</span> album <span class="keyword">struct</span> &#123;</span><br><span class="line">    ID     <span class="type">string</span>  <span class="string">`json:&quot;id&quot;`</span></span><br><span class="line">    Title  <span class="type">string</span>  <span class="string">`json:&quot;title&quot;`</span></span><br><span class="line">    Artist <span class="type">string</span>  <span class="string">`json:&quot;artist&quot;`</span></span><br><span class="line">    Price  <span class="type">float64</span> <span class="string">`json:&quot;price&quot;`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// albums 切片用于存储唱片专辑的数据。</span></span><br><span class="line"><span class="keyword">var</span> albums = []album&#123;</span><br><span class="line">    &#123;ID: <span class="string">&quot;1&quot;</span>, Title: <span class="string">&quot;Blue Train&quot;</span>, Artist: <span class="string">&quot;John Coltrane&quot;</span>, Price: <span class="number">56.99</span>&#125;,</span><br><span class="line">    &#123;ID: <span class="string">&quot;2&quot;</span>, Title: <span class="string">&quot;Jeru&quot;</span>, Artist: <span class="string">&quot;Gerry Mulligan&quot;</span>, Price: <span class="number">17.99</span>&#125;,</span><br><span class="line">    &#123;ID: <span class="string">&quot;3&quot;</span>, Title: <span class="string">&quot;Sarah Vaughan and Clifford Brown&quot;</span>, Artist: <span class="string">&quot;Sarah Vaughan&quot;</span>, Price: <span class="number">39.99</span>&#125;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    router := gin.Default()</span><br><span class="line">    router.GET(<span class="string">&quot;/albums&quot;</span>, getAlbums)</span><br><span class="line">    router.GET(<span class="string">&quot;/albums/:id&quot;</span>, getAlbumByID)</span><br><span class="line">    router.POST(<span class="string">&quot;/albums&quot;</span>, postAlbums)</span><br><span class="line"></span><br><span class="line">    router.Run(<span class="string">&quot;localhost:8080&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// getAlbums 以 JSON 格式回复所有唱片专辑的列表。</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">getAlbums</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">    c.IndentedJSON(http.StatusOK, albums)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// postAlbums 从请求的 JSON 数据中添加一个新的专辑。</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">postAlbums</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">    <span class="keyword">var</span> newAlbum album</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 使用 BindJSON 方法将接收到的 JSON 数据绑定到 newAlbum 变量。</span></span><br><span class="line">    <span class="keyword">if</span> err := c.BindJSON(&amp;newAlbum); err != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 将新的专辑添加到切片中。</span></span><br><span class="line">    albums = <span class="built_in">append</span>(albums, newAlbum)</span><br><span class="line">    c.IndentedJSON(http.StatusCreated, newAlbum)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// getAlbumByID 根据客户端发送的 id 参数，定位 ID 值与之匹配的唱片专辑，然后将其作为响应返回。</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">getAlbumByID</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">    id := c.Param(<span class="string">&quot;id&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 遍历唱片专辑列表，寻找 ID 值与参数匹配的专辑。</span></span><br><span class="line">    <span class="keyword">for</span> _, a := <span class="keyword">range</span> albums &#123;</span><br><span class="line">        <span class="keyword">if</span> a.ID == id &#123;</span><br><span class="line">            c.IndentedJSON(http.StatusOK, a)</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    c.IndentedJSON(http.StatusNotFound, gin.H&#123;<span class="string">&quot;message&quot;</span>: <span class="string">&quot;album not found&quot;</span>&#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Go/" rel="tag"># Go</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/03/01/vscode%E9%93%BE%E6%8E%A5%E5%A4%B1%E6%95%88%E9%97%AE%E9%A2%98/" rel="prev" title="vscode链接失效问题">
+                  <i class="fa fa-angle-left"></i> vscode链接失效问题
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="waline"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2023 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">0x6f6f@cqu</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div><script color="0,0,0" opacity="0.5" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+
+
+  <script class="next-config" data-name="leancloud_visitors" type="application/json">{"enable":true,"app_id":"Wa3k8ylRA7dli6SMCMNYLm4A-MdYXbMMI","app_key":"qc5L2urgh6ZYQhzbS18Flzy6","server_url":null,"security":false}</script>
+  <script src="/js/third-party/statistics/lean-analytics.js"></script>
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-cn","enable":true,"serverURL":"0x6f6f-waline-server.vercel.app","cssUrl":"https://unpkg.com/@waline/client@v2/dist/waline.css","commentCount":true,"pageview":false,"placeholder":"我说几句……","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"visitor":false,"comment_count":true,"requiredFields":[],"libUrl":"//unpkg.com/@waline/client@v2/dist/waline.js","el":"#waline","comment":true,"path":"/2024/04/07/Gin-Web%E6%A1%86%E6%9E%B6%E8%AE%B0%E5%BD%95/"}</script>
+<link rel="stylesheet" href="https://unpkg.com/@waline/client@v2/dist/waline.css">
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.waline.el).then(() =>
+    NexT.utils.getScript(CONFIG.waline.libUrl, { condition: window.Waline })
+  ).then(() => 
+    Waline.init(Object.assign({}, CONFIG.waline,{ el: document.querySelector(CONFIG.waline.el) }))
+  );
+});
+</script>
+
+<!-- hexo injector body_end start --><script src="/js/outdate.js"></script><!-- hexo injector body_end end --></body>
+</html>
